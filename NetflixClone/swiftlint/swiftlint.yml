@@ -1,0 +1,191 @@
+# All rules description could be found on the:
+# https://realm.github.io/SwiftLint/rule-directory.html
+
+disabled_rules: # rule identifiers to exclude from running
+  - notification_center_detachment
+  - unused_setter_value # complains about overridden setter value
+  - inclusive_language
+
+opt_in_rules: # some rules are only opt-in
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - contains_over_first_not_nil
+  - empty_count
+  - empty_string
+  - toggle_bool
+  - explicit_init
+  - first_where
+  - joined_default_parameter
+  - literal_expression_end_indentation
+  - unneeded_parentheses_in_closure_argument
+  - operator_usage_whitespace
+  - private_action
+  - private_outlet
+  - private_swiftui_state
+  - weak_delegate
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  - vendor
+  - XCTemplates
+  - DerivedData
+
+custom_rules:
+  print_usage:
+    included: ".*\\.swift"
+    excluded: "Logger\\.swift"
+    name: "print() method usage"
+    regex: '^[ \t]*print\([a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)( *)]*\)'
+    message: "Logger should be used instead of print"
+    severity: error
+
+  debug_print_usage:
+    included: "./Source/*\\.swift"
+    name: "debugPrint() method usage"
+    regex: '^[ \t]*debugPrint\([a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)( *)]*\)'
+    message: "Logger should be used instead of debugPrint"
+    severity: error
+
+  capturing_list_space:
+    included: ".*\\.swift"
+    name: "Space in capturing list"
+    regex: '\{\['
+    message: "Detected missing space"
+
+  class_empty_line:
+    included: '.*\.swift'
+    name: 'Empty line in class, extension, struct'
+    regex: '^[ \t\r]*((public|internal|fileprivate|private|final)[ \t\r]+)*(class|extension|struct|protocol)[ \t\r]+[A-Za-z0-9_:, \t\r]+[{][ \t\r]*\n[ \t\r]*[^\r\n\t\f\v ]'
+    message: 'Class, extension, struct should have one empty line at the beginning'
+    severity: error
+
+  empty_line_after_func:
+    included: '.*\.swift'
+    name: 'Empty line after func(){'
+    regex: '(^[ a-zA-Z@ ]*(?:func) [ a-zA-Z0-9:,<>\.\(\)\"-=\?\!`_\[\]]*\{\n( *)?\n)'
+    message: 'Detected empty line after func().'
+    severity: error
+
+  one_liner_return:
+    included: '.*\.swift'
+    name: 'Empty line before return'
+    regex: '([{]|[:])(\n\s*){2,}(return)'
+    message: 'Return statement for one liners should be compact in single line.'
+
+  too_many_lines_before_return:
+    included: '.*\.swift'
+    name: 'Too many lines before return'
+    regex: '(\n\s*){3,}(return)'
+    message: 'Return statement should be preceded by single empty line.'
+
+  internal_keyword:
+    included: '.*\.swift'
+    name: 'Redundant internal keyword'
+    regex: '((internal)[ \t\r]+)'
+    message: 'Internal modifier is used by default, adding it explicitly is redundant.'
+
+  empty_line_before_closing_bracket:
+    included: '.*\.swift'
+    name: 'Empty line before closing bracket'
+    regex: '(^( *)?\n\s*\})'
+    message: 'Detected empty line before closing bracket.'
+
+  empty_line_at_beginning_of_file:
+    included: '.*\.swift'
+    name: 'Empty line at beginning of file'
+    regex: '(^\A( *)?\n)'
+    message: 'Detected empty line at beginning of file.'
+
+  opening_bracket_at_beginning_of_line:
+    included: '.*\.swift'
+    name: 'Opening bracket at beginning of line'
+    regex: '(^( *)?\{)'
+    message: 'Opening bracket should not be added in the new line.'
+
+  copyright_header_of_file:
+    included: '.*\.swift'
+    name: 'Wrong Copyright Header'
+    regex: '^(\/\/  Copyright © .{4} \b(?!Eurospektras\b)\w+\. All rights reserved\.\n)'
+    message: 'Detected not Eurospektras Copyright © header. It should be: // Copyright © "year" Eurospektras. All rights reserved.'
+
+  mark_not_overrides:
+    included: '.*\.swift'
+    name: 'Wrong mark is used'
+    regex: '(^( *)?\/\/ MARK: - View(Controller)? lifecycle$)'
+    message: 'Use overrides instead: "// MARK: - Overrides"'
+
+  mark_not_methods:
+    included: '.*\.swift'
+    name: 'Wrong mark is used'
+    regex: '(^( *)?\/\/ MARK: - Helpers$)'
+    message: 'Use methods instead: "// MARK: - Methods or // MARK: - Private methods"'
+
+  mark_not_properties:
+    included: '.*\.swift'
+    name: 'Wrong mark is used'
+    regex: '(^( *)?\/\/ MARK: - ([Pp]ublic|[Pp]rivate|[Ss]tatic) [Pp]roperties$)'
+    message: 'Use properties instead: "// MARK: - Properties"'
+
+  empty_line_after_guard:
+    included: '.*\.swift'
+    name: 'Empty line after guard keyword'
+    regex: '(^( *)?guard\s*\n+)'
+    message: 'Detected empty line after guard keyword.'
+
+  empty_line_after_if:
+    included: '.*\.swift'
+    name: 'Empty line after if keyword'
+    regex: '(^( *)?if\s*\n+)'
+    message: 'Detected empty line after if keyword.'
+
+  ternary_operator_space:
+    included: '.*\.swift'
+    name: 'Ternary operator space'
+    regex: '^(^[ \t]*)[a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)( *)]+\n(^\1\? [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)( *)]+)\n(^\1: [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)( *)]+)'
+    message: 'Ternary operators must have 1 extra tab compared to comparing statement line'
+
+  delegate_in_class_body:
+    included: '.*\.swift'
+    name: 'Delegate in the type body'
+    regex: '^[  \ta-zA-Z0-9@]*class [a-zA-Z0-9]+: [a-zA-Z0-9, \t]+[dD]elegate[a-zA-Z0-9, \t]*\{'
+    message: 'Any delegates must be separated from the main class body to the extension with a MARK to avoid messy code and be more readable'
+
+  multiple_delegates:
+    included: '.*\.swift'
+    name: 'Multiple Delegates in one body'
+    regex: '^[  \ta-zA-Z0-9@]*extension [a-zA-Z0-9]+: [a-zA-Z0-9, \t]+[dD]elegate[a-zA-Z0-9, \t]*[dD]elegate[a-zA-Z0-9, \t]*\{'
+    message: 'Each delegate must be in its own extension body with a MARK'
+
+attributes:
+  always_on_same_line: []
+comma: error
+force_cast: warning
+force_try: warning
+return_arrow_whitespace: error
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  max_length:
+    warning: 40
+    error: 49
+trailing_whitespace:
+  ignores_empty_lines: true
+line_length:
+  warning: 150
+  error: 180
+type_body_length:
+  warning: 300
+  error: 400
+cyclomatic_complexity:
+  ignores_case_statements: true
+file_length:
+  warning: 1000
+  error: 2000
+function_body_length:
+  warning: 80
+  error: 100
+warning_threshold: 200
+reporter: "xcode"
