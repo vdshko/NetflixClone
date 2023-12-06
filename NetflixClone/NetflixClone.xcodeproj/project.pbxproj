@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A119224B2B1FD15000AF2018 /* CellIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119224A2B1FD15000AF2018 /* CellIdentifiers.swift */; };
+		A119224E2B1FD9FF00AF2018 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119224D2B1FD9FF00AF2018 /* HomeViewModel.swift */; };
+		A11922502B1FDA1D00AF2018 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119224F2B1FDA1D00AF2018 /* HomeModel.swift */; };
+		A11922522B1FDAD900AF2018 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11922512B1FDAD900AF2018 /* CollectionViewTableViewCell.swift */; };
+		A11922552B1FDB9400AF2018 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11922542B1FDB9400AF2018 /* UITableViewExtensions.swift */; };
+		A11922572B1FE38400AF2018 /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11922562B1FE38400AF2018 /* UICollectionViewExtensions.swift */; };
+		A119225A2B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11922592B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift */; };
 		A120D33A2B1E8C5500D2B685 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3392B1E8C5500D2B685 /* AppDelegate.swift */; };
 		A120D33C2B1E8C5500D2B685 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D33B2B1E8C5500D2B685 /* SceneDelegate.swift */; };
 		A120D33E2B1E8C5500D2B685 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D33D2B1E8C5500D2B685 /* MainTabBarController.swift */; };
@@ -21,6 +28,13 @@
 
 /* Begin PBXFileReference section */
 		781037B65A931C4E73AC2042 /* Pods-NetflixClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixClone.release.xcconfig"; path = "Target Support Files/Pods-NetflixClone/Pods-NetflixClone.release.xcconfig"; sourceTree = "<group>"; };
+		A119224A2B1FD15000AF2018 /* CellIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiers.swift; sourceTree = "<group>"; };
+		A119224D2B1FD9FF00AF2018 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A119224F2B1FDA1D00AF2018 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		A11922512B1FDAD900AF2018 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
+		A11922542B1FDB9400AF2018 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
+		A11922562B1FE38400AF2018 /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
+		A11922592B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCellModel.swift; sourceTree = "<group>"; };
 		A120D3362B1E8C5500D2B685 /* NetflixClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A120D3392B1E8C5500D2B685 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A120D33B2B1E8C5500D2B685 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +70,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A11922462B1FD08500AF2018 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A11922472B1FD09100AF2018 /* Constants */,
+				A11922532B1FDB3C00AF2018 /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A11922472B1FD09100AF2018 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A119224A2B1FD15000AF2018 /* CellIdentifiers.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		A119224C2B1FD9BC00AF2018 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A11922582B1FE54E00AF2018 /* CollectionViewTableViewCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A11922532B1FDB3C00AF2018 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A11922542B1FDB9400AF2018 /* UITableViewExtensions.swift */,
+				A11922562B1FE38400AF2018 /* UICollectionViewExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A11922582B1FE54E00AF2018 /* CollectionViewTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				A11922512B1FDAD900AF2018 /* CollectionViewTableViewCell.swift */,
+				A11922592B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift */,
+			);
+			path = CollectionViewTableViewCell;
+			sourceTree = "<group>";
+		};
 		A120D32D2B1E8C5500D2B685 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				A120D34E2B1E9D7F00D2B685 /* AppDelegate */,
+				A11922462B1FD08500AF2018 /* Common */,
 				A120D34F2B1E9D9100D2B685 /* Flow */,
 				A120D3502B1E9D9A00D2B685 /* Resources */,
 			);
@@ -118,7 +176,10 @@
 		A120D3512B1EA03200D2B685 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A119224C2B1FD9BC00AF2018 /* Cells */,
+				A119224F2B1FDA1D00AF2018 /* HomeModel.swift */,
 				A120D3552B1EA07700D2B685 /* HomeViewController.swift */,
+				A119224D2B1FD9FF00AF2018 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -272,12 +333,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A119225A2B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift in Sources */,
 				A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */,
+				A119224E2B1FD9FF00AF2018 /* HomeViewModel.swift in Sources */,
+				A11922552B1FDB9400AF2018 /* UITableViewExtensions.swift in Sources */,
 				A120D3582B1EA08500D2B685 /* DownloadsViewController.swift in Sources */,
+				A11922522B1FDAD900AF2018 /* CollectionViewTableViewCell.swift in Sources */,
 				A120D33E2B1E8C5500D2B685 /* MainTabBarController.swift in Sources */,
+				A119224B2B1FD15000AF2018 /* CellIdentifiers.swift in Sources */,
 				A120D33A2B1E8C5500D2B685 /* AppDelegate.swift in Sources */,
+				A11922572B1FE38400AF2018 /* UICollectionViewExtensions.swift in Sources */,
 				A120D33C2B1E8C5500D2B685 /* SceneDelegate.swift in Sources */,
 				A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */,
+				A11922502B1FDA1D00AF2018 /* HomeModel.swift in Sources */,
 				A120D3562B1EA07700D2B685 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
