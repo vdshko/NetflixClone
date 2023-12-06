@@ -13,17 +13,18 @@ final class CollectionViewTableViewCell: UITableViewCell {
 
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 140.0, height: 200.0)
         layout.scrollDirection = .horizontal
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         return collectionView
     }()
 
     // MARK: - Properties
-
+    
+    private var cellHorizontalInset: CGFloat = 20.0
     private var model: Model?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -58,6 +59,7 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
         guard let cell: UICollectionViewCell = collectionView.cell(for: CellIdentifiers.default, in: indexPath)
         else { return UICollectionViewCell() }
         cell.contentView.backgroundColor = .systemBlue
+        cell.contentView.layer.cornerRadius = 4.0
 
         return cell
     }
@@ -65,7 +67,19 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension CollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {}
+extension CollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let width: CGFloat = (collectionView.bounds.width - cellHorizontalInset * 2) / 2.8
+        let height: CGFloat = width / 0.7
+        
+        return CGSize(width: width, height: height)
+    }
+}
 
 // MARK: - Private methods
 
@@ -77,7 +91,6 @@ private extension CollectionViewTableViewCell {
 
     func configureUI() {
         contentView.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
