@@ -57,10 +57,10 @@ extension MainTabBarController {
 
         var title: String {
             switch self {
-            case .home: return "Home"
-            case .upcoming: return "Coming Soon"
-            case .search: return "Top Search"
-            case .downloads: return "Downloads"
+            case .home: return String(localized: "tab.home")
+            case .upcoming: return String(localized: "tab.upcoming")
+            case .search: return String(localized: "tab.search")
+            case .downloads: return String(localized: "tab.downloads")
             }
         }
 

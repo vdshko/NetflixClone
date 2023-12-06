@@ -16,6 +16,8 @@ final class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
 
         return tableView
     }()
@@ -76,12 +78,13 @@ private extension HomeViewController {
 
     func configureUI() {
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        let size: CGSize = CGSize(width: view.bounds.width, height: 450.0)
+        tableView.tableHeaderView = HomeHeaderView(frame: CGRect(origin: .zero, size: size))
     }
 }
