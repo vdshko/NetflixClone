@@ -23,6 +23,8 @@
 		A120D3582B1EA08500D2B685 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */; };
 		A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3592B1EA08F00D2B685 /* SearchViewController.swift */; };
 		A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */; };
+		A1A1D84D2B2BA30800357B00 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84C2B2BA30800357B00 /* swiftlint.yml */; };
+		A1A1D84F2B2BAFC400357B00 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */; };
 		A1F129132B212AA6001F7D62 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */; };
 		A1F129182B212F1A001F7D62 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129172B212F1A001F7D62 /* HomeHeaderView.swift */; };
 		A1F1291A2B212F28001F7D62 /* HomeHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129192B212F28001F7D62 /* HomeHeaderViewModel.swift */; };
@@ -50,6 +52,8 @@
 		A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		A120D3592B1EA08F00D2B685 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
+		A1A1D84C2B2BA30800357B00 /* swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = swiftlint.yml; path = swiftlint/swiftlint.yml; sourceTree = SOURCE_ROOT; };
+		A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		A1F129172B212F1A001F7D62 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		A1F129192B212F28001F7D62 /* HomeHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -176,9 +180,11 @@
 			isa = PBXGroup;
 			children = (
 				A120D3422B1E8C5800D2B685 /* Assets.xcassets */,
+				A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */,
 				A120D3472B1E8C5800D2B685 /* Info.plist */,
 				A120D3442B1E8C5800D2B685 /* LaunchScreen.storyboard */,
 				A1F1291B2B213739001F7D62 /* Localizable.xcstrings */,
+				A1A1D84C2B2BA30800357B00 /* swiftlint.yml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -305,7 +311,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1A1D84F2B2BAFC400357B00 /* Colors.xcassets in Resources */,
 				A120D3462B1E8C5800D2B685 /* LaunchScreen.storyboard in Resources */,
+				A1A1D84D2B2BA30800357B00 /* swiftlint.yml in Resources */,
 				A120D3432B1E8C5800D2B685 /* Assets.xcassets in Resources */,
 				A1F1291C2B213739001F7D62 /* Localizable.xcstrings in Resources */,
 			);
