@@ -40,7 +40,8 @@ private extension MainTabBarController {
     }
 
     func configureUI() {
-        tabBar.tintColor = .label
+        tabBar.tintColor = UIColor(resource: .tabBarTint)
+        tabBar.backgroundColor = UIColor(resource: .tabBarBackground)
     }
 }
 
