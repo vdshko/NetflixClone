@@ -23,6 +23,7 @@
 		A120D3582B1EA08500D2B685 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */; };
 		A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3592B1EA08F00D2B685 /* SearchViewController.swift */; };
 		A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */; };
+		A16B352A2B3254FC00A38050 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B35292B3254FC00A38050 /* StringExtensions.swift */; };
 		A1A1D84D2B2BA30800357B00 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84C2B2BA30800357B00 /* swiftlint.yml */; };
 		A1A1D84F2B2BAFC400357B00 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */; };
 		A1F129132B212AA6001F7D62 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */; };
@@ -52,6 +53,7 @@
 		A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		A120D3592B1EA08F00D2B685 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
+		A16B35292B3254FC00A38050 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		A1A1D84C2B2BA30800357B00 /* swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = swiftlint.yml; path = swiftlint/swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		A11922532B1FDB3C00AF2018 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A16B35292B3254FC00A38050 /* StringExtensions.swift */,
 				A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */,
 				A11922562B1FE38400AF2018 /* UICollectionViewExtensions.swift */,
 				A11922542B1FDB9400AF2018 /* UITableViewExtensions.swift */,
@@ -382,6 +385,7 @@
 				A120D33A2B1E8C5500D2B685 /* AppDelegate.swift in Sources */,
 				A11922572B1FE38400AF2018 /* UICollectionViewExtensions.swift in Sources */,
 				A120D33C2B1E8C5500D2B685 /* SceneDelegate.swift in Sources */,
+				A16B352A2B3254FC00A38050 /* StringExtensions.swift in Sources */,
 				A1F129182B212F1A001F7D62 /* HomeHeaderView.swift in Sources */,
 				A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */,
 				A11922502B1FDA1D00AF2018 /* HomeModel.swift in Sources */,

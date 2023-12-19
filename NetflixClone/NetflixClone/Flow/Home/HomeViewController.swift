@@ -38,7 +38,12 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.data.count
+        return viewModel.sectionTitles.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard section < viewModel.sectionTitles.count else { return nil }
+        return viewModel.sectionTitles[section]
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,6 +70,20 @@ extension HomeViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200.0
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header: UITableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = .white
+        header.textLabel?.font = .systemFont(ofSize: 18.0, weight: .semibold)
+        header.textLabel?.text = header.textLabel?.text?.capitalizedFirst
+        let inset: CGFloat = 20.0
+        header.textLabel?.frame = CGRect(
+            x: header.bounds.origin.x + inset,
+            y: header.bounds.origin.y,
+            width: header.bounds.width - inset,
+            height: header.bounds.height
+        )
     }
 }
 

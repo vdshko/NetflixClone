@@ -47,6 +47,8 @@ final class HomeHeaderView: UIView {
     // MARK: - Properties
 
     private var model: Model = Model()
+    
+    private let gradient: CAGradientLayer = CAGradientLayer()
 
     // MARK: - Initialisers
 
@@ -60,6 +62,14 @@ final class HomeHeaderView: UIView {
         super.init(coder: coder)
 
         configure()
+    }
+
+    // MARK: - Overrides
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        gradient.frame = bounds
     }
 
     // MARK: - Methods
@@ -90,7 +100,6 @@ private extension HomeHeaderView {
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        let gradient: CAGradientLayer = CAGradientLayer()
         gradient.colors = [
             UIColor.clear.cgColor,
             UIColor.systemBackground.cgColor
