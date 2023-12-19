@@ -34,17 +34,17 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
 
 custom_rules:
   print_usage:
-    included: ".*\\.swift"
+    included: '.*\.swift'
     excluded: "Logger\\.swift"
     name: "print() method usage"
-    regex: '^[ \t]*print\([a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)( *)]*\)'
+    regex: '^[ \t]*print\('
     message: "Logger should be used instead of print"
     severity: error
 
   debug_print_usage:
-    included: "./Source/*\\.swift"
+    included: '.*\.swift'
     name: "debugPrint() method usage"
-    regex: '^[ \t]*debugPrint\([a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)( *)]*\)'
+    regex: '^[ \t]*debugPrint\('
     message: "Logger should be used instead of debugPrint"
     severity: error
 
@@ -57,7 +57,7 @@ custom_rules:
   class_empty_line:
     included: '.*\.swift'
     name: 'Empty line in class, extension, struct'
-    regex: '^[ \t\r]*((public|internal|fileprivate|private|final)[ \t\r]+)*(class|extension|struct|protocol)[ \t\r]+[A-Za-z0-9_:, \t\r]+[{][ \t\r]*\n[ \t\r]*[^\r\n\t\f\v ]'
+    regex: '^[ \t\r]*((public|internal|fileprivate|private|final)[ \t\r]+)*(class|extension|struct|protocol|enum)[ \t\r]+[A-Za-z0-9_:, \t\r]+[{][ \t\r]*\n[ \t\r]*[^\r\n\t\f\v ]'
     message: 'Class, extension, struct should have one empty line at the beginning'
     severity: error
 
@@ -72,7 +72,7 @@ custom_rules:
     included: '.*\.swift'
     name: 'Empty line before return'
     regex: '([{]|[:])(\n\s*){2,}(return)'
-    message: 'Return statement for one liners should be compact in single line.'
+    message: 'Return statement for one-liners should be compact in a single line.'
 
   too_many_lines_before_return:
     included: '.*\.swift'
@@ -113,7 +113,7 @@ custom_rules:
   mark_not_overrides:
     included: '.*\.swift'
     name: 'Wrong mark is used'
-    regex: '(^( *)?\/\/ MARK: - View(Controller)? lifecycle$)'
+    regex: '(^( *)?\/\/ MARK: - (View(Controller)?|VC) [lL]ifecycle$)'
     message: 'Use overrides instead: "// MARK: - Overrides"'
 
   mark_not_methods:
@@ -143,7 +143,7 @@ custom_rules:
   ternary_operator_space:
     included: '.*\.swift'
     name: 'Ternary operator space'
-    regex: '^(^[ \t]*)[a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)\[\]( *)]+\n(^\1\? [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)\[\]( *)]+)\n(^\1: [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)\[\]( *)]+)'
+    regex: '^(^[ \t]*)[a-zA-Z0-9_\.<>=:\?\+\-\*\/\(\)\[\]\"( *)]+\n(^\1\? [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)\[\]( *)]+)\n(^\1: [a-zA-Z0-9_\.<>=:\"\?\+\-\*\/\(\)\[\]( *)]+)'
     message: 'Ternary operators must have 1 extra tab compared to comparing statement line'
 
   delegate_in_class_body:

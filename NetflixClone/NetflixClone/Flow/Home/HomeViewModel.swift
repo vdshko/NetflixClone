@@ -12,6 +12,7 @@ final class HomeViewModel {
     // MARK: - Properties
 
     var data: [Int] { return model.data }
+    var sectionTitles: [String] { return model.sectionTitles }
 
     private let model: HomeModel = HomeModel()
 }

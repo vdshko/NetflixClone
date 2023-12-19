@@ -74,7 +74,7 @@ extension CollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width: CGFloat = (collectionView.bounds.width - cellHorizontalInset * 2) / 2.8
+        let width: CGFloat = 140.0
         let height: CGFloat = width / 0.7
         
         return CGSize(width: width, height: height)
