@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
 
     // MARK: - UI
 
@@ -24,12 +24,28 @@ final class HomeViewController: UIViewController {
 
     // MARK: - Properties
 
-    private let viewModel: HomeViewModel = HomeViewModel()
+    private let viewModel: HomeViewModel
+
+    // MARK: - Initializer
+
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+
+        super.init()
+    }
+
+    // MARK: - Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configure()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.updateData()
     }
 }
 
