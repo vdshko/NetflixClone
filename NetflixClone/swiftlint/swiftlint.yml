@@ -165,6 +165,7 @@ force_cast: warning
 force_try: warning
 return_arrow_whitespace: error
 identifier_name:
+  allowed_symbols: ['_']
   min_length:
     warning: 2
     error: 1

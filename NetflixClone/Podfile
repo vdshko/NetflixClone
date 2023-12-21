@@ -7,6 +7,9 @@ install! 'cocoapods', :warn_for_unused_master_specs_repo => false
 def shared_pods
   # swiftlint; https://github.com/realm/SwiftLint
   pod 'SwiftLint', '0.41', :inhibit_warnings => true
+  
+  # Network sniffer; MUST BE CONFIGURED ONLY FOR DEBUG; https://github.com/kasketis/netfox
+  pod 'netfox', '1.21.0', :inhibit_warnings => true
 end
 
 target 'NetflixClone' do

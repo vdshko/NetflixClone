@@ -20,7 +20,9 @@ extension SceneDelegate: UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = MainTabBarController()
+        let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
+        let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
+        window?.rootViewController = MainTabBarController(networkManager: networkManager)
         window?.makeKeyAndVisible()
     }
 }
