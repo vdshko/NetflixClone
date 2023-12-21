@@ -9,6 +9,18 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
 
+    private let networkManager: NetworkManager
+
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("\(String(describing: Self.self)) init(coder:) - has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +39,11 @@ private extension MainTabBarController {
 
     func configureTabs() {
         let tabControllers: [UINavigationController] = [
-            HomeViewController(),
+            HomeViewController(
+                viewModel: HomeViewModelImpl(
+                    model: HomeModelImpl(networkManager: networkManager)
+                )
+            ),
             UpcomingViewController(),
             SearchViewController(),
             DownloadsViewController()
