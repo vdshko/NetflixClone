@@ -37,6 +37,9 @@
 		A17F0ACA2B32785300FAC765 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F0AC92B32785300FAC765 /* BaseViewController.swift */; };
 		A1A1D84D2B2BA30800357B00 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84C2B2BA30800357B00 /* swiftlint.yml */; };
 		A1A1D84F2B2BAFC400357B00 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */; };
+		A1DB1C7A2B34EDBC00D19ED1 /* PagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */; };
+		A1DB1C7C2B34EFA300D19ED1 /* TrendingMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C7B2B34EFA300D19ED1 /* TrendingMovie.swift */; };
+		A1DB1C7E2B34FED900D19ED1 /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C7D2B34FED900D19ED1 /* NetworkManagerError.swift */; };
 		A1F129132B212AA6001F7D62 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */; };
 		A1F129182B212F1A001F7D62 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129172B212F1A001F7D62 /* HomeHeaderView.swift */; };
 		A1F1291A2B212F28001F7D62 /* HomeHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F129192B212F28001F7D62 /* HomeHeaderViewModel.swift */; };
@@ -78,6 +81,9 @@
 		A17F0AC92B32785300FAC765 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A1A1D84C2B2BA30800357B00 /* swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = swiftlint.yml; path = swiftlint/swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedModel.swift; sourceTree = "<group>"; };
+		A1DB1C7B2B34EFA300D19ED1 /* TrendingMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMovie.swift; sourceTree = "<group>"; };
+		A1DB1C7D2B34FED900D19ED1 /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
 		A1F129122B212AA6001F7D62 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		A1F129172B212F1A001F7D62 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		A1F129192B212F28001F7D62 /* HomeHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -248,6 +254,7 @@
 		A16B352B2B32663900A38050 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				A1DB1C782B34E8A100D19ED1 /* API */,
 				A16B352E2B3266F800A38050 /* NetworkManager */,
 				A1735AD02B33AAFC002C11FA /* RequestBuilder */,
 				A16B35332B326CED00A38050 /* Requests */,
@@ -260,6 +267,7 @@
 			children = (
 				A1735ABF2B339F96002C11FA /* Managers */,
 				A16B352C2B32665800A38050 /* NetworkManager.swift */,
+				A1DB1C7D2B34FED900D19ED1 /* NetworkManagerError.swift */,
 				A16B35312B32673E00A38050 /* NetworkManagerFactory.swift */,
 			);
 			path = NetworkManager;
@@ -298,6 +306,15 @@
 				A1735ACE2B33A77A002C11FA /* URLRequestBuilder.swift */,
 			);
 			path = RequestBuilder;
+			sourceTree = "<group>";
+		};
+		A1DB1C782B34E8A100D19ED1 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */,
+				A1DB1C7B2B34EFA300D19ED1 /* TrendingMovie.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		A1F129142B212ED1001F7D62 /* Views */ = {
@@ -465,7 +482,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A16B352D2B32665800A38050 /* NetworkManager.swift in Sources */,
+				A1DB1C7A2B34EDBC00D19ED1 /* PagedModel.swift in Sources */,
 				A119225A2B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift in Sources */,
+				A1DB1C7E2B34FED900D19ED1 /* NetworkManagerError.swift in Sources */,
 				A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */,
 				A119224E2B1FD9FF00AF2018 /* HomeViewModel.swift in Sources */,
 				A1735AC12B339FB2002C11FA /* NetworkManagerSpy.swift in Sources */,
@@ -478,6 +497,7 @@
 				A16B35302B32671F00A38050 /* NetworkManagerImpl.swift in Sources */,
 				A120D33E2B1E8C5500D2B685 /* MainTabBarController.swift in Sources */,
 				A119224B2B1FD15000AF2018 /* CellIdentifiers.swift in Sources */,
+				A1DB1C7C2B34EFA300D19ED1 /* TrendingMovie.swift in Sources */,
 				A120D33A2B1E8C5500D2B685 /* AppDelegate.swift in Sources */,
 				A1735AD62B33B13B002C11FA /* URLRequestBuilder+Requests.swift in Sources */,
 				A11922572B1FE38400AF2018 /* UICollectionViewExtensions.swift in Sources */,

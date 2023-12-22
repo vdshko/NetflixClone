@@ -32,6 +32,8 @@ final class HomeViewController: BaseViewController {
         self.viewModel = viewModel
 
         super.init()
+        
+        self.viewModel.dataChangedCallback = { [weak tableView] in tableView?.reloadData() }
     }
 
     // MARK: - Overrides
@@ -129,7 +131,7 @@ private extension HomeViewController {
     }
 
     func configureNavigationBar() {
-        let leftButtonAction: UIAction = UIAction { _ in }
+        let leftButtonAction: UIAction = UIAction { [weak self] _ in self?.viewModel.updateData() }
         let leftButton: UIButton = UIButton(frame: .zero, primaryAction: leftButtonAction)
         let leftButtonImage: UIImage = UIImage(resource: .netflixLogo)
             .withAlignmentRectInsets(.init(top: -8, left: -8, bottom: -8, right: -8))

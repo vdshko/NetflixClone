@@ -10,7 +10,8 @@ import Foundation
 final class NetworkManagerSpy: NetworkManager {
 
     private(set) var _makeRequestCounter: Int = 0
-    func makeRequest(for networkRequest: NetworkRequest) {
+    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T> {
         _makeRequestCounter += 1
+        return .success(PagedModel())
     }
 }
