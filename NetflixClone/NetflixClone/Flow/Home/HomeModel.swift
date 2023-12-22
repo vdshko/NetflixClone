@@ -11,6 +11,9 @@ protocol HomeModel: AnyObject {
 
     var data: [Int] { get }
     var sectionTitles: [String] { get }
+    var pagedModel: PagedModel<TrendingMovie> { get }
+
+    var dataChangedCallback: () -> Void { get set }
 
     func updateData()
 }
@@ -19,6 +22,8 @@ final class HomeModelImpl: HomeModel {
 
     // MARK: - Properties
     
+    var dataChangedCallback: () -> Void = {}
+
     private(set) var data: [Int] = [Int](1...10)
     private(set) var sectionTitles: [String] = [
         String(localized: "home.section_title.trending_movies"),
@@ -27,6 +32,7 @@ final class HomeModelImpl: HomeModel {
         String(localized: "home.section_title.upcoming_movies"),
         String(localized: "home.section_title.top_rated")
     ]
+    private(set) var pagedModel: PagedModel<TrendingMovie> = PagedModel<TrendingMovie>()
 
     private let networkManager: NetworkManager
 
@@ -39,6 +45,18 @@ final class HomeModelImpl: HomeModel {
     // MARK: - Methods
 
     func updateData() {
-        Requests.Trending.movie(networkManager: networkManager)
+        Task {
+            let result: PagedResponse<TrendingMovie> = await Requests.Trending.movie(
+                networkManager: networkManager,
+                pagedModel: pagedModel
+            )
+            switch result {
+            case .failure(let error): Logger.error(error)
+            case .success(let newPagedModel):
+                pagedModel.append(nextModel: newPagedModel)
+                data = [Int](1...pagedModel.results.count)
+                DispatchQueue.main.async { self.dataChangedCallback() }
+            }
+        }
     }
 }
