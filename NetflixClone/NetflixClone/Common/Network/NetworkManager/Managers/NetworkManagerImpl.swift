@@ -9,14 +9,30 @@ import Foundation
 
 final class NetworkManagerImpl: NetworkManager {
 
-    func makeRequest(for networkRequest: NetworkRequest) {
-        Task {
-            do {
-                let result = try await URLSession.shared.data(for: networkRequest.urlRequest)
-                Logger.success("data:", result.0, "Status Code:", (result.1 as? HTTPURLResponse)?.statusCode ?? -1)
-            } catch {
-                Logger.error(error as Any)
+    private lazy var jsonDecoder: JSONDecoder = {
+        let decoder: JSONDecoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let dateFormatter: DateFormatter = DateFormatter()
+        if let timeZone: TimeZone = TimeZone(abbreviation: "UTC") {
+            dateFormatter.timeZone = timeZone
+        }
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        
+        return decoder
+    }()
+
+    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T> {
+        do {
+            let result: (data: Data, response: URLResponse) = try await URLSession.shared.data(for: networkRequest.urlRequest)
+            let statusCode: Int? = (result.response as? HTTPURLResponse)?.statusCode
+            switch statusCode {
+            case 200: return .success(try jsonDecoder.decode(PagedModel<T>.self, from: result.data))
+            case 401: return .failure(NetworkManagerError.unauthorized)
+            default: return .failure(NetworkManagerError.badResponse(statusCode: statusCode))
             }
+        } catch {
+            return .failure(NetworkManagerError.other(error))
         }
     }
 }

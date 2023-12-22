@@ -11,6 +11,7 @@ protocol HomeViewModel: AnyObject {
 
     var data: [Int] { get }
     var sectionTitles: [String] { get }
+    var dataChangedCallback: () -> Void { get set }
 
     func updateData()
 }
@@ -18,6 +19,8 @@ protocol HomeViewModel: AnyObject {
 final class HomeViewModelImpl: HomeViewModel {
 
     // MARK: - Properties
+
+    var dataChangedCallback: () -> Void = {}
 
     var data: [Int] { return model.data }
     var sectionTitles: [String] { return model.sectionTitles }
@@ -28,6 +31,7 @@ final class HomeViewModelImpl: HomeViewModel {
 
     init(model: HomeModel) {
         self.model = model
+        self.model.dataChangedCallback = { [weak self] in self?.dataChangedCallback() }
     }
 
     // MARK: - Methods
