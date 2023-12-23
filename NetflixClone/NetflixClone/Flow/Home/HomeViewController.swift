@@ -33,7 +33,10 @@ final class HomeViewController: BaseViewController {
 
         super.init()
         
-        self.viewModel.dataChangedCallback = { [weak tableView] in tableView?.reloadData() }
+        self.viewModel.dataChangedCallback = { [weak tableView] dataType in
+            guard let index: Int = HomeDataType.allCases.firstIndex(of: dataType) else { return }
+            tableView?.reloadSections([index], with: .automatic)
+        }
     }
 
     // MARK: - Overrides
@@ -42,12 +45,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
 
         configure()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        viewModel.updateData()
+        reload()
     }
 }
 
@@ -56,12 +54,11 @@ final class HomeViewController: BaseViewController {
 extension HomeViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sectionTitles.count
+        return viewModel.pagedModels.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section < viewModel.sectionTitles.count else { return nil }
-        return viewModel.sectionTitles[section]
+        return section < HomeDataType.allCases.count ? HomeDataType.allCases[section].title : nil
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,7 +68,10 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: CollectionViewTableViewCell = tableView.cell(for: CellIdentifiers.collection)
         else { return UITableViewCell() }
-        let model: CollectionViewTableViewCell.Model = .init(data: viewModel.data)
+        let data: [Int]? = viewModel.pagedModels[HomeDataType.allCases[indexPath.section]]?
+            .results
+            .map(\.id)
+        let model: CollectionViewTableViewCell.Model = .init(data: data ?? [])
         cell.setup(with: model)
 
         return cell
@@ -121,6 +121,15 @@ extension HomeViewController {
     }
 }
 
+// MARK: - TabBarUpdatable
+
+extension HomeViewController: TabBarUpdatable {
+    
+    func reload() {
+        viewModel.reloadData()
+    }
+}
+
 // MARK: - Private methods
 
 private extension HomeViewController {
@@ -131,7 +140,7 @@ private extension HomeViewController {
     }
 
     func configureNavigationBar() {
-        let leftButtonAction: UIAction = UIAction { [weak self] _ in self?.viewModel.updateData() }
+        let leftButtonAction: UIAction = UIAction { [weak self] _ in self?.viewModel.nextData(for: .trending(.movie)) }
         let leftButton: UIButton = UIButton(frame: .zero, primaryAction: leftButtonAction)
         let leftButtonImage: UIImage = UIImage(resource: .netflixLogo)
             .withAlignmentRectInsets(.init(top: -8, left: -8, bottom: -8, right: -8))

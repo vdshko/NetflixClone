@@ -9,30 +9,21 @@ import Foundation
 
 protocol HomeModel: AnyObject {
 
-    var data: [Int] { get }
-    var sectionTitles: [String] { get }
-    var pagedModel: PagedModel<TrendingMovie> { get }
+    var pagedModels: [HomeDataType: PagedModel<Cinema>] { get }
 
-    var dataChangedCallback: () -> Void { get set }
+    var dataChangedCallback: (HomeDataType) -> Void { get set }
 
-    func updateData()
+    func reloadData()
+    func nextData(for dataTypes: [HomeDataType])
 }
 
 final class HomeModelImpl: HomeModel {
 
     // MARK: - Properties
-    
-    var dataChangedCallback: () -> Void = {}
 
-    private(set) var data: [Int] = [Int](1...10)
-    private(set) var sectionTitles: [String] = [
-        String(localized: "home.section_title.trending_movies"),
-        String(localized: "home.section_title.popular"),
-        String(localized: "home.section_title.trending_tv"),
-        String(localized: "home.section_title.upcoming_movies"),
-        String(localized: "home.section_title.top_rated")
-    ]
-    private(set) var pagedModel: PagedModel<TrendingMovie> = PagedModel<TrendingMovie>()
+    var dataChangedCallback: (HomeDataType) -> Void = { _ in }
+
+    private(set) var pagedModels: [HomeDataType: PagedModel<Cinema>]
 
     private let networkManager: NetworkManager
 
@@ -40,23 +31,79 @@ final class HomeModelImpl: HomeModel {
 
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
+        self.pagedModels = HomeDataType.allCases.reduce(into: [HomeDataType: PagedModel<Cinema>]()) { $0[$1] = PagedModel<Cinema>() }
     }
 
     // MARK: - Methods
 
-    func updateData() {
+    func reloadData() {
+        HomeDataType.allCases.forEach {
+            pagedModels[$0] = PagedModel<Cinema>()
+            updateData(for: $0)
+        }
+    }
+
+    func nextData(for dataTypes: [HomeDataType]) {
+        dataTypes.forEach {
+            updateData(for: $0)
+        }
+    }
+}
+
+// MARK: - Private methods
+
+private extension HomeModelImpl {
+
+    func updateData(for dataType: HomeDataType) {
         Task {
-            let result: PagedResponse<TrendingMovie> = await Requests.Trending.movie(
-                networkManager: networkManager,
-                pagedModel: pagedModel
-            )
+            let result: PagedResponse<Cinema>
+            switch dataType {
+            case .trending(let mediaType):
+                switch mediaType {
+                case .movie:
+                    result = await Requests.Trending.movie(
+                        networkManager: networkManager,
+                        pagedModel: pagedModel(for: dataType)
+                    )
+                case .tv:
+                    result = await Requests.Trending.tv(
+                        networkManager: networkManager,
+                        pagedModel: pagedModel(for: dataType)
+                    )
+                }
+            case .popular:
+                result = await Requests.Movie.popular(
+                    networkManager: networkManager,
+                    pagedModel: pagedModel(for: dataType)
+                )
+            case .upcoming:
+                result = await Requests.Movie.upcoming(
+                    networkManager: networkManager,
+                    pagedModel: pagedModel(for: dataType)
+                )
+            case .topRated:
+                result = await Requests.Movie.topRated(
+                    networkManager: networkManager,
+                    pagedModel: pagedModel(for: dataType)
+                )
+            }
             switch result {
             case .failure(let error): Logger.error(error)
             case .success(let newPagedModel):
-                pagedModel.append(nextModel: newPagedModel)
-                data = [Int](1...pagedModel.results.count)
-                DispatchQueue.main.async { self.dataChangedCallback() }
+                await MainActor.run {
+                    if newPagedModel.page == 1 {
+                        pagedModels[dataType]?.update(newModel: newPagedModel)
+                    } else {
+                        pagedModels[dataType]?.append(nextModel: newPagedModel)
+                    }
+                    self.dataChangedCallback(dataType)
+                }
             }
         }
+    }
+
+    @MainActor
+    func pagedModel(for dataType: HomeDataType) -> PagedModel<Cinema> {
+        return pagedModels[dataType] ?? PagedModel<Cinema>()
     }
 }

@@ -9,21 +9,21 @@ import Foundation
 
 protocol HomeViewModel: AnyObject {
 
-    var data: [Int] { get }
-    var sectionTitles: [String] { get }
-    var dataChangedCallback: () -> Void { get set }
+    var pagedModels: [HomeDataType: PagedModel<Cinema>] { get }
 
-    func updateData()
+    var dataChangedCallback: (HomeDataType) -> Void { get set }
+
+    func reloadData()
+    func nextData(for dataTypes: HomeDataType...)
 }
 
 final class HomeViewModelImpl: HomeViewModel {
 
     // MARK: - Properties
 
-    var dataChangedCallback: () -> Void = {}
+    var dataChangedCallback: (HomeDataType) -> Void = { _ in }
 
-    var data: [Int] { return model.data }
-    var sectionTitles: [String] { return model.sectionTitles }
+    var pagedModels: [HomeDataType: PagedModel<Cinema>] { return model.pagedModels }
 
     private let model: HomeModel
 
@@ -31,12 +31,16 @@ final class HomeViewModelImpl: HomeViewModel {
 
     init(model: HomeModel) {
         self.model = model
-        self.model.dataChangedCallback = { [weak self] in self?.dataChangedCallback() }
+        self.model.dataChangedCallback = { [weak self] in self?.dataChangedCallback($0) }
     }
 
     // MARK: - Methods
-    
-    func updateData() {
-        model.updateData()
+
+    func reloadData() {
+        model.reloadData()
+    }
+
+    func nextData(for dataTypes: HomeDataType...) {
+        model.nextData(for: dataTypes)
     }
 }
