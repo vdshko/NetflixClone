@@ -9,7 +9,11 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
 
+    // MARK: - Properties
+
     private let networkManager: NetworkManager
+
+    // MARK: - Initializers
 
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
@@ -21,10 +25,17 @@ final class MainTabBarController: UITabBarController {
         fatalError("\(String(describing: Self.self)) init(coder:) - has not been implemented")
     }
     
+    // MARK: - Overrides
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configure()
+    }
+
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard let index: Int = tabBar.items?.firstIndex(of: item) else { return }
+        ((viewControllers?[index] as? UINavigationController)?.topViewController as? TabBarUpdatable)?.reload()
     }
 }
 

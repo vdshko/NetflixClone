@@ -1,5 +1,5 @@
 //
-//  TrendingMovie.swift
+//  Cinema.swift
 //  NetflixClone
 //
 //  Created by Vladyslav Shkodych on 22.12.2023.
@@ -7,31 +7,32 @@
 
 import Foundation
 
-enum MediaType: String, Codable {
+enum MediaType: String, CaseIterable, Codable {
 
     case movie
+    case tv
 }
 
-struct TrendingMovie: Codable {
+struct Cinema: Codable {
 
     let id: Int
-    let adult: Bool
+    let adult: Bool?
     let backdropPath: String?
-    let originalTitle: String
-    let mediaType: MediaType
-    let genreIds: [Int]
-    let voteAverage: Double
-    let popularity: Double
-    let posterPath: String
-    let title: String
-    let overview: String
-    let originalLanguage: String
-    let voteCount: Int
+    let originalTitle: String?
+    let mediaType: MediaType?
+    let genreIds: [Int]?
+    let voteAverage: Double?
+    let popularity: Double?
+    let posterPath: String?
+    let title: String?
+    let overview: String?
+    let originalLanguage: String?
+    let voteCount: Int?
     let releaseDate: Date?
-    let video: Bool
+    let video: Bool?
 }
 
-extension TrendingMovie {
+extension Cinema {
 
     init() {
         self.id = 0
