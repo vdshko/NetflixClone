@@ -27,6 +27,8 @@ final class CollectionViewTableViewCell: UITableViewCell {
     private var cellHorizontalInset: CGFloat = 20.0
     private var model: Model?
 
+    // MARK: - Initializers
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -56,10 +58,9 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: UICollectionViewCell = collectionView.cell(for: CellIdentifiers.default, in: indexPath)
+        guard let cell: CinemaCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinema, in: indexPath)
         else { return UICollectionViewCell() }
-        cell.contentView.backgroundColor = .systemBlue
-        cell.contentView.layer.cornerRadius = 4.0
+        cell.setup(image: URL(string: "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg"), title: "Test")
 
         return cell
     }

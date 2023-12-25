@@ -12,4 +12,5 @@ enum CellIdentifiers {
 
     static let `default`: String = "DefaultCell"
     static let collection: String = String(describing: CollectionViewTableViewCell.self)
+    static let cinema: String = String(describing: CinemaCollectionViewCell.self)
 }

@@ -1,20 +1,24 @@
 PODS:
+  - Kingfisher (7.10.1)
   - netfox (1.21.0)
   - SwiftLint (0.41.0)
 
 DEPENDENCIES:
+  - Kingfisher (= 7.10.1)
   - netfox (= 1.21.0)
   - SwiftLint (= 0.41)
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
     - netfox
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Kingfisher: bc5abe80a8e0144537ef1dd5a0b2621b04f7f439
   netfox: 9d5cc727fe7576c4c7688a2504618a156b7d44b7
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
 
-PODFILE CHECKSUM: 313e0d44460fcd9f58210e642102bdfbb8d98aa9
+PODFILE CHECKSUM: 052787f87f5d7736699c9b0fd6149b0932996885
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3
