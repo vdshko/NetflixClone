@@ -11,6 +11,8 @@ final class MainTabBarController: UITabBarController {
 
     // MARK: - Properties
 
+    private var previousSelectedTabIndex: Int = 0
+
     private let networkManager: NetworkManager
 
     // MARK: - Initializers
@@ -35,7 +37,10 @@ final class MainTabBarController: UITabBarController {
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         guard let index: Int = tabBar.items?.firstIndex(of: item) else { return }
-        ((viewControllers?[index] as? UINavigationController)?.topViewController as? TabBarUpdatable)?.reload()
+        let isEqualTabIndex: Bool = index == previousSelectedTabIndex
+        previousSelectedTabIndex = index
+        ((viewControllers?[index] as? UINavigationController)?.topViewController as? TabBarSelectable)?
+            .handleTabItemTap(isPreviouslySelected: isEqualTabIndex)
     }
 }
 
@@ -64,6 +69,7 @@ private extension MainTabBarController {
             $0.0.tabBarItem.image = $0.1.icon
         }
         setViewControllers(tabControllers, animated: true)
+        selectedIndex = previousSelectedTabIndex
     }
 
     func configureUI() {
