@@ -10,6 +10,9 @@ def shared_pods
   
   # Network sniffer; MUST BE CONFIGURED ONLY FOR DEBUG; https://github.com/kasketis/netfox
   pod 'netfox', '1.21.0', :inhibit_warnings => true
+
+  # Kingfisher; https://github.com/onevcat/Kingfisher
+  pod 'Kingfisher', '7.10.1', :inhibit_warnings => true
 end
 
 target 'NetflixClone' do
