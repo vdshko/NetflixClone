@@ -23,6 +23,7 @@ final class HomeModelImpl: HomeModel {
 
     var dataChangedCallback: (HomeDataType) -> Void = { _ in }
 
+    @MainActor
     private(set) var pagedModels: [HomeDataType: PagedModel<Cinema>]
 
     private let networkManager: NetworkManager
@@ -36,6 +37,7 @@ final class HomeModelImpl: HomeModel {
 
     // MARK: - Methods
 
+    @MainActor
     func reloadData() {
         HomeDataType.allCases.forEach {
             pagedModels[$0] = PagedModel<Cinema>()
@@ -44,9 +46,7 @@ final class HomeModelImpl: HomeModel {
     }
 
     func nextData(for dataTypes: [HomeDataType]) {
-        dataTypes.forEach {
-            updateData(for: $0)
-        }
+        dataTypes.forEach { updateData(for: $0) }
     }
 }
 
@@ -56,54 +56,35 @@ private extension HomeModelImpl {
 
     func updateData(for dataType: HomeDataType) {
         Task {
+            async let model = MainActor.run {
+                return pagedModels[dataType] ?? PagedModel<Cinema>()
+            }
             let result: PagedResponse<Cinema>
             switch dataType {
             case .trending(let mediaType):
                 switch mediaType {
-                case .movie:
-                    result = await Requests.Trending.movie(
-                        networkManager: networkManager,
-                        pagedModel: pagedModel(for: dataType)
-                    )
-                case .tv:
-                    result = await Requests.Trending.tv(
-                        networkManager: networkManager,
-                        pagedModel: pagedModel(for: dataType)
-                    )
+                case .movie: result = await Requests.Trending.movie(networkManager: networkManager, pagedModel: model)
+                case .tv: result = await Requests.Trending.tv(networkManager: networkManager, pagedModel: model)
                 }
-            case .popular:
-                result = await Requests.Movie.popular(
-                    networkManager: networkManager,
-                    pagedModel: pagedModel(for: dataType)
-                )
-            case .upcoming:
-                result = await Requests.Movie.upcoming(
-                    networkManager: networkManager,
-                    pagedModel: pagedModel(for: dataType)
-                )
-            case .topRated:
-                result = await Requests.Movie.topRated(
-                    networkManager: networkManager,
-                    pagedModel: pagedModel(for: dataType)
-                )
+            case .popular: result = await Requests.Movie.popular(networkManager: networkManager, pagedModel: model)
+            case .upcoming: result = await Requests.Movie.upcoming(networkManager: networkManager, pagedModel: model)
+            case .topRated: result = await Requests.Movie.topRated(networkManager: networkManager, pagedModel: model)
             }
-            switch result {
-            case .failure(let error): Logger.error(error)
-            case .success(let newPagedModel):
-                await MainActor.run {
-                    if newPagedModel.page == 1 {
-                        pagedModels[dataType]?.update(newModel: newPagedModel)
-                    } else {
-                        pagedModels[dataType]?.append(nextModel: newPagedModel)
-                    }
-                    self.dataChangedCallback(dataType)
-                }
-            }
+            await handleUpdates(result, for: dataType)
         }
     }
 
     @MainActor
-    func pagedModel(for dataType: HomeDataType) -> PagedModel<Cinema> {
-        return pagedModels[dataType] ?? PagedModel<Cinema>()
+    func handleUpdates(_ result: PagedResponse<Cinema>, for dataType: HomeDataType) {
+        switch result {
+        case .failure(let error): Logger.error(error)
+        case .success(let newPagedModel):
+            if newPagedModel.page == 1 {
+                pagedModels[dataType]?.update(newModel: newPagedModel)
+            } else {
+                pagedModels[dataType]?.append(nextModel: newPagedModel)
+            }
+            dataChangedCallback(dataType)
+        }
     }
 }

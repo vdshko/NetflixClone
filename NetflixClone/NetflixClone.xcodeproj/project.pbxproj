@@ -39,7 +39,7 @@
 		A1A1D84F2B2BAFC400357B00 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */; };
 		A1A7A2232B362DAA00F49FF4 /* Requests+Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2222B362DAA00F49FF4 /* Requests+Movie.swift */; };
 		A1A7A2252B36327800F49FF4 /* HomeDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2242B36327800F49FF4 /* HomeDataType.swift */; };
-		A1A7A2272B364EB100F49FF4 /* TabBarUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2262B364EB100F49FF4 /* TabBarUpdatable.swift */; };
+		A1A7A2272B364EB100F49FF4 /* TabBarSelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7A2262B364EB100F49FF4 /* TabBarSelectable.swift */; };
 		A1DB1C7A2B34EDBC00D19ED1 /* PagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */; };
 		A1DB1C7C2B34EFA300D19ED1 /* Cinema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C7B2B34EFA300D19ED1 /* Cinema.swift */; };
 		A1DB1C7E2B34FED900D19ED1 /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB1C7D2B34FED900D19ED1 /* NetworkManagerError.swift */; };
@@ -86,7 +86,7 @@
 		A1A1D84E2B2BAFC400357B00 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A1A7A2222B362DAA00F49FF4 /* Requests+Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Requests+Movie.swift"; sourceTree = "<group>"; };
 		A1A7A2242B36327800F49FF4 /* HomeDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataType.swift; sourceTree = "<group>"; };
-		A1A7A2262B364EB100F49FF4 /* TabBarUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarUpdatable.swift; sourceTree = "<group>"; };
+		A1A7A2262B364EB100F49FF4 /* TabBarSelectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarSelectable.swift; sourceTree = "<group>"; };
 		A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedModel.swift; sourceTree = "<group>"; };
 		A1DB1C7B2B34EFA300D19ED1 /* Cinema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cinema.swift; sourceTree = "<group>"; };
 		A1DB1C7D2B34FED900D19ED1 /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				A120D33D2B1E8C5500D2B685 /* MainTabBarController.swift */,
-				A1A7A2262B364EB100F49FF4 /* TabBarUpdatable.swift */,
+				A1A7A2262B364EB100F49FF4 /* TabBarSelectable.swift */,
 			);
 			path = MainTabBar;
 			sourceTree = "<group>";
@@ -524,7 +524,7 @@
 				A1A7A2232B362DAA00F49FF4 /* Requests+Movie.swift in Sources */,
 				A16B352A2B3254FC00A38050 /* StringExtensions.swift in Sources */,
 				A16B35322B32673E00A38050 /* NetworkManagerFactory.swift in Sources */,
-				A1A7A2272B364EB100F49FF4 /* TabBarUpdatable.swift in Sources */,
+				A1A7A2272B364EB100F49FF4 /* TabBarSelectable.swift in Sources */,
 				A1F129182B212F1A001F7D62 /* HomeHeaderView.swift in Sources */,
 				A17F0ACA2B32785300FAC765 /* BaseViewController.swift in Sources */,
 				A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */,
