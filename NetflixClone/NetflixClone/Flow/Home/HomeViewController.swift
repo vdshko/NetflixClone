@@ -45,7 +45,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
 
         configure()
-        reload()
+        viewModel.reloadData()
     }
 }
 
@@ -123,10 +123,21 @@ extension HomeViewController {
 
 // MARK: - TabBarUpdatable
 
-extension HomeViewController: TabBarUpdatable {
+extension HomeViewController: TabBarSelectable {
     
-    func reload() {
-        viewModel.reloadData()
+    func handleTabItemTap(isPreviouslySelected: Bool) {
+        guard isPreviouslySelected else { return }
+        let percent10HeightOfScreen: CGFloat
+        if let height: CGFloat = UIApplication.shared.rootViewController?.view.bounds.height {
+            percent10HeightOfScreen = height * 0.10
+        } else {
+            percent10HeightOfScreen = 80.0
+        }
+        let navigationBarBackgroundHeight: CGFloat = navigationController?.navigationBar.subviews
+            .first { NSStringFromClass($0.classForCoder) == "_UIBarBackground" }?
+            .frame.height ?? 0.0
+        guard tableView.contentOffset.y + navigationBarBackgroundHeight > percent10HeightOfScreen else { return }
+        tableView.setContentOffset(CGPoint(x: 0.0, y: -navigationBarBackgroundHeight), animated: true)
     }
 }
 
