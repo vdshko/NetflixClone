@@ -68,9 +68,8 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: CollectionViewTableViewCell = tableView.cell(for: CellIdentifiers.collection)
         else { return UITableViewCell() }
-        let data: [Int]? = viewModel.pagedModels[HomeDataType.allCases[indexPath.section]]?
+        let data: [Cinema]? = viewModel.pagedModels[HomeDataType.allCases[indexPath.section]]?
             .results
-            .map(\.id)
         let model: CollectionViewTableViewCell.Model = .init(data: data ?? [])
         cell.setup(with: model)
 

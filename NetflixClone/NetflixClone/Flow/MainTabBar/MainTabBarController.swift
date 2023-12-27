@@ -51,6 +51,7 @@ private extension MainTabBarController {
     func configure() {
         configureTabs()
         configureUI()
+        requestConfigurationDetails()
     }
 
     func configureTabs() {
@@ -75,6 +76,17 @@ private extension MainTabBarController {
     func configureUI() {
         tabBar.tintColor = UIColor(resource: .tabBarTint)
         tabBar.backgroundColor = UIColor(resource: .tabBarBackground)
+    }
+
+    func requestConfigurationDetails() {
+        Task(priority: .high) {
+            let result: Response<ConfigurationDetails> = await Requests.Configuration.details(networkManager: networkManager)
+            switch result {
+            case .failure(let error): Logger.error(error)
+            case .success(let details):
+                Requests.Constants.Images.updateBaseUrl(to: details.images.secureBaseUrl)
+            }
+        }
     }
 }
 

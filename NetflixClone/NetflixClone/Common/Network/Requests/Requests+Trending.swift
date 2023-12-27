@@ -23,7 +23,7 @@ extension Requests.Trending {
             .add(pagedModel: pagedModel)
             .build()
 
-        return await networkManager.makeRequest(for: networkRequest)
+        return await networkManager.makePagedRequest(for: networkRequest)
     }
 
     static func tv(networkManager: NetworkManager, pagedModel: PagedModel<Cinema>) async -> PagedResponse<Cinema> {
@@ -35,6 +35,6 @@ extension Requests.Trending {
             .add(pagedModel: pagedModel)
             .build()
 
-        return await networkManager.makeRequest(for: networkRequest)
+        return await networkManager.makePagedRequest(for: networkRequest)
     }
 }

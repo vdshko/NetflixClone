@@ -23,6 +23,9 @@
 		A120D3582B1EA08500D2B685 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */; };
 		A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D3592B1EA08F00D2B685 /* SearchViewController.swift */; };
 		A120D35D2B1EA09E00D2B685 /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */; };
+		A12FBA8B2B3B84DE00FFAB2C /* Requests+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FBA8A2B3B84DE00FFAB2C /* Requests+Configuration.swift */; };
+		A12FBA8D2B3B87B700FFAB2C /* ConfigurationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FBA8C2B3B87B700FFAB2C /* ConfigurationDetails.swift */; };
+		A12FBA8F2B3B987800FFAB2C /* KingfisherExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12FBA8E2B3B987800FFAB2C /* KingfisherExtensions.swift */; };
 		A16B352A2B3254FC00A38050 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B35292B3254FC00A38050 /* StringExtensions.swift */; };
 		A16B352D2B32665800A38050 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B352C2B32665800A38050 /* NetworkManager.swift */; };
 		A16B35302B32671F00A38050 /* NetworkManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16B352F2B32671F00A38050 /* NetworkManagerImpl.swift */; };
@@ -72,6 +75,9 @@
 		A120D3572B1EA08500D2B685 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		A120D3592B1EA08F00D2B685 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A120D35C2B1EA09E00D2B685 /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
+		A12FBA8A2B3B84DE00FFAB2C /* Requests+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Requests+Configuration.swift"; sourceTree = "<group>"; };
+		A12FBA8C2B3B87B700FFAB2C /* ConfigurationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDetails.swift; sourceTree = "<group>"; };
+		A12FBA8E2B3B987800FFAB2C /* KingfisherExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherExtensions.swift; sourceTree = "<group>"; };
 		A16B35292B3254FC00A38050 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		A16B352C2B32665800A38050 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A16B352F2B32671F00A38050 /* NetworkManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerImpl.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 				A11922562B1FE38400AF2018 /* UICollectionViewExtensions.swift */,
 				A11922542B1FDB9400AF2018 /* UITableViewExtensions.swift */,
 				A1735AD52B33B13B002C11FA /* URLRequestBuilder+Requests.swift */,
+				A12FBA8E2B3B987800FFAB2C /* KingfisherExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -287,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				A16B35342B326CFE00A38050 /* Requests.swift */,
+				A12FBA8A2B3B84DE00FFAB2C /* Requests+Configuration.swift */,
 				A1A7A2222B362DAA00F49FF4 /* Requests+Movie.swift */,
 				A1735AD92B33B867002C11FA /* Requests+Trending.swift */,
 			);
@@ -340,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				A1DB1C7B2B34EFA300D19ED1 /* Cinema.swift */,
+				A12FBA8C2B3B87B700FFAB2C /* ConfigurationDetails.swift */,
 				A1DB1C792B34EDBC00D19ED1 /* PagedModel.swift */,
 			);
 			path = API;
@@ -512,6 +521,7 @@
 				A16B352D2B32665800A38050 /* NetworkManager.swift in Sources */,
 				A1DB1C7A2B34EDBC00D19ED1 /* PagedModel.swift in Sources */,
 				A119225A2B1FE55A00AF2018 /* CollectionViewTableViewCellModel.swift in Sources */,
+				A12FBA8B2B3B84DE00FFAB2C /* Requests+Configuration.swift in Sources */,
 				A1DB1C7E2B34FED900D19ED1 /* NetworkManagerError.swift in Sources */,
 				A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */,
 				A119224E2B1FD9FF00AF2018 /* HomeViewModel.swift in Sources */,
@@ -525,8 +535,10 @@
 				A16B35302B32671F00A38050 /* NetworkManagerImpl.swift in Sources */,
 				A120D33E2B1E8C5500D2B685 /* MainTabBarController.swift in Sources */,
 				A119224B2B1FD15000AF2018 /* CellIdentifiers.swift in Sources */,
+				A12FBA8D2B3B87B700FFAB2C /* ConfigurationDetails.swift in Sources */,
 				A1DB1C7C2B34EFA300D19ED1 /* Cinema.swift in Sources */,
 				A120D33A2B1E8C5500D2B685 /* AppDelegate.swift in Sources */,
+				A12FBA8F2B3B987800FFAB2C /* KingfisherExtensions.swift in Sources */,
 				A1735AD62B33B13B002C11FA /* URLRequestBuilder+Requests.swift in Sources */,
 				A11922572B1FE38400AF2018 /* UICollectionViewExtensions.swift in Sources */,
 				A1735ACF2B33A77A002C11FA /* URLRequestBuilder.swift in Sources */,

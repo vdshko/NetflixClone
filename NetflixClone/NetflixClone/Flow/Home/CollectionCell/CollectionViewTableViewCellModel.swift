@@ -11,6 +11,6 @@ extension CollectionViewTableViewCell {
     
     struct Model {
         
-        let data: [Int]
+        let data: [Cinema]
     }
 }
