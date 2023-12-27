@@ -23,7 +23,7 @@ extension Requests.Movie {
             .add(pagedModel: pagedModel)
             .build()
 
-        return await networkManager.makeRequest(for: networkRequest)
+        return await networkManager.makePagedRequest(for: networkRequest)
     }
 
     static func upcoming(networkManager: NetworkManager, pagedModel: PagedModel<Cinema>) async -> PagedResponse<Cinema> {
@@ -35,7 +35,7 @@ extension Requests.Movie {
             .add(pagedModel: pagedModel)
             .build()
 
-        return await networkManager.makeRequest(for: networkRequest)
+        return await networkManager.makePagedRequest(for: networkRequest)
     }
 
     static func topRated(networkManager: NetworkManager, pagedModel: PagedModel<Cinema>) async -> PagedResponse<Cinema> {
@@ -47,6 +47,6 @@ extension Requests.Movie {
             .add(pagedModel: pagedModel)
             .build()
 
-        return await networkManager.makeRequest(for: networkRequest)
+        return await networkManager.makePagedRequest(for: networkRequest)
     }
 }

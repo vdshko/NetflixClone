@@ -58,9 +58,10 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: CinemaCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinema, in: indexPath)
+        guard let cell: CinemaCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinema, in: indexPath),
+              let data: Cinema = model?.data[indexPath.row]
         else { return UICollectionViewCell() }
-        cell.setup(image: URL(string: "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg"), title: "Test")
+        cell.setup(image: data.posterPath, title: data.originalTitle)
 
         return cell
     }

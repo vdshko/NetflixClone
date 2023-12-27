@@ -9,5 +9,6 @@ import Foundation
 
 protocol NetworkManager: AnyObject {
 
-    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T>
+    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> Response<T>
+    func makePagedRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T>
 }
