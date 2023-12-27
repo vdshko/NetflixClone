@@ -47,8 +47,8 @@ final class CinemaCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Methods
 
-    func setup(image url: URL?, title: String) {
-        imageView.kf.setImage(with: url)
+    func setup(image path: String?, title: String?) {
+        imageView.kf.setImage(for: path)
         titleLabel.text = title
     }
 }

@@ -22,7 +22,21 @@ final class NetworkManagerImpl: NetworkManager {
         return decoder
     }()
 
-    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T> {
+    func makeRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> Response<T> {
+        do {
+            let result: (data: Data, response: URLResponse) = try await URLSession.shared.data(for: networkRequest.urlRequest)
+            let statusCode: Int? = (result.response as? HTTPURLResponse)?.statusCode
+            switch statusCode {
+            case 200: return .success(try jsonDecoder.decode(T.self, from: result.data))
+            case 401: return .failure(NetworkManagerError.unauthorized)
+            default: return .failure(NetworkManagerError.badResponse(statusCode: statusCode))
+            }
+        } catch {
+            return .failure(NetworkManagerError.other(error))
+        }
+    }
+
+    func makePagedRequest<T: Decodable>(for networkRequest: NetworkRequest) async -> PagedResponse<T> {
         do {
             let result: (data: Data, response: URLResponse) = try await URLSession.shared.data(for: networkRequest.urlRequest)
             let statusCode: Int? = (result.response as? HTTPURLResponse)?.statusCode
