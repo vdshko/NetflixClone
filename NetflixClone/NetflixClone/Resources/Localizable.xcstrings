@@ -121,6 +121,17 @@
           }
         }
       }
+    },
+    "upcoming.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

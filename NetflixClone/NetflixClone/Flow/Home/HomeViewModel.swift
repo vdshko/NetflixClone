@@ -6,12 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 protocol HomeViewModel: AnyObject {
 
     var pagedModels: [HomeDataType: PagedModel<Cinema>] { get }
-
-    var dataChangedCallback: (HomeDataType) -> Void { get set }
+    var dataChangedSubject: PassthroughSubject<HomeDataType, Never> { get }
 
     func reloadData()
     func nextData(for dataTypes: HomeDataType...)
@@ -21,9 +21,8 @@ final class HomeViewModelImpl: HomeViewModel {
 
     // MARK: - Properties
 
-    var dataChangedCallback: (HomeDataType) -> Void = { _ in }
-
     var pagedModels: [HomeDataType: PagedModel<Cinema>] { return model.pagedModels }
+    var dataChangedSubject: PassthroughSubject<HomeDataType, Never> { return model.dataChangedSubject }
 
     private let model: HomeModel
 
@@ -31,7 +30,6 @@ final class HomeViewModelImpl: HomeViewModel {
 
     init(model: HomeModel) {
         self.model = model
-        self.model.dataChangedCallback = { [weak self] in self?.dataChangedCallback($0) }
     }
 
     // MARK: - Methods

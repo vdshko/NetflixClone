@@ -10,8 +10,18 @@ import Foundation
 /// A model for the data pagination.
 struct PagedModel<T: Decodable>: Decodable {
 
+    var isFirstPage: Bool { return page == 1 }
+
     private(set) var page: Int
     private(set) var results: [T]
+
+    mutating func setup(with model: PagedModel<T>) {
+        if model.isFirstPage {
+            update(newModel: model)
+        } else {
+            append(nextModel: model)
+        }
+    }
 
     mutating func update(newModel: PagedModel<T>) {
         page = newModel.page
