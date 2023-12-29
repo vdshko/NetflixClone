@@ -15,7 +15,7 @@ final class HomeHeaderView: UIView {
         let imageView: UIImageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 4.0
+        imageView.layer.cornerRadius = Constants.Layout.cornerRadius
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(resource: .debugHeaderBackground)
 
@@ -26,8 +26,8 @@ final class HomeHeaderView: UIView {
         let button: UIButton = UIButton()
         button.setTitle(String(localized: "home.header.play_button.title"), for: .normal)
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1.0
-        button.layer.cornerRadius = 4.0
+        button.layer.borderWidth = Constants.Layout.borderWidth
+        button.layer.cornerRadius = Constants.Layout.cornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -37,8 +37,8 @@ final class HomeHeaderView: UIView {
         let button: UIButton = UIButton()
         button.setTitle(String(localized: "home.header.download_button.title"), for: .normal)
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1.0
-        button.layer.cornerRadius = 4.0
+        button.layer.borderWidth = Constants.Layout.borderWidth
+        button.layer.cornerRadius = Constants.Layout.cornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
