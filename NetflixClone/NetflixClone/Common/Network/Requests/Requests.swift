@@ -26,14 +26,14 @@ extension Requests.Constants {
 
     enum Images {
 
-        static let baseUrlSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+        static let baseUrlSubject: CurrentValueSubject<String, Never> = CurrentValueSubject("https://image.tmdb.org/t/p/")
 
         static func updateBaseUrl(to newBaseUrl: String) {
             baseUrlSubject.send(newBaseUrl)
         }
 
         static func url(for path: String, size type: Self.ImagesSize = .original) -> URL? {
-            return URL(string: [baseUrlSubject.value, type.rawValue, "/", path].joined())
+            return URL(string: [baseUrlSubject.value, type.rawValue, path].joined())
         }
     }
 }

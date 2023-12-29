@@ -47,6 +47,13 @@ final class HomeCollectionViewTableViewCell: UITableViewCell {
         self.model = model
         collectionView.reloadData()
     }
+
+    func scrollToStart() {
+        guard collectionView.numberOfSections > 0,
+              collectionView.numberOfItems(inSection: 0) > 0
+        else { return }
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -97,7 +104,8 @@ private extension HomeCollectionViewTableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: 200.0)
         ])
     }
 }

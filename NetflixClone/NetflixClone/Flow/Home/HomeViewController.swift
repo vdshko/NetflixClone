@@ -25,7 +25,7 @@ final class HomeViewController: BaseViewController {
 
     // MARK: - Properties
 
-    private var disposeBag: Set<AnyCancellable> = Set<AnyCancellable>()
+    private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
     private let viewModel: HomeViewModel
 
@@ -81,10 +81,6 @@ extension HomeViewController: UITableViewDelegate {
         return 40.0
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200.0
-    }
-
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header: UITableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.textColor = .white
@@ -133,6 +129,10 @@ extension HomeViewController: TabBarSelectable {
             .frame.height ?? 0.0
         guard tableView.contentOffset.y + navigationBarBackgroundHeight > percent10HeightOfScreen else { return }
         tableView.setContentOffset(CGPoint(x: 0.0, y: -navigationBarBackgroundHeight), animated: true)
+        guard tableView.numberOfSections > 0 else { return }
+        (0 ..< tableView.numberOfSections).forEach {
+            (tableView.cellForRow(at: IndexPath(row: 0, section: $0)) as? HomeCollectionViewTableViewCell)?.scrollToStart()
+        }
     }
 }
 
@@ -143,7 +143,7 @@ private extension HomeViewController {
     func configure() {
         configureNavigationBar()
         configureTableView()
-        configureSubscriptions()
+        configureBinding()
     }
 
     func configureNavigationBar() {
@@ -152,7 +152,6 @@ private extension HomeViewController {
         let leftButtonImage: UIImage = UIImage(resource: .netflixLogo)
             .withAlignmentRectInsets(.init(top: -8, left: -8, bottom: -8, right: -8))
         leftButton.setImage(leftButtonImage, for: .normal)
-        leftButton.imageView?.contentMode = .scaleAspectFit
         leftButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
         leftButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -166,7 +165,11 @@ private extension HomeViewController {
         let rightButtonAction2: UIAction = UIAction { _ in }
         zip(["play.rectangle", "person"], [rightButtonAction1, rightButtonAction2]).forEach {
             let button: UIButton = UIButton(frame: .zero, primaryAction: $0.1)
-            button.setImage(UIImage(systemName: $0.0), for: .normal)
+            let image: UIImage? = UIImage(
+                systemName: $0.0,
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 24.0)
+            )
+            button.setImage(image, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 button.widthAnchor.constraint(equalToConstant: 45.0),
@@ -191,13 +194,13 @@ private extension HomeViewController {
         tableView.tableHeaderView = HomeHeaderView(frame: CGRect(origin: .zero, size: size))
     }
 
-    func configureSubscriptions() {
+    func configureBinding() {
         viewModel.dataChangedSubject
             .receive(on: RunLoop.main)
             .sink { [weak tableView] dataType in
                 guard let index: Int = HomeDataType.allCases.firstIndex(of: dataType) else { return }
                 tableView?.reloadSections([index], with: .automatic)
             }
-            .store(in: &disposeBag)
+            .store(in: &cancelBag)
     }
 }
