@@ -6,12 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 protocol HomeModel: AnyObject {
 
     var pagedModels: [HomeDataType: PagedModel<Cinema>] { get }
-
-    var dataChangedCallback: (HomeDataType) -> Void { get set }
+    var dataChangedSubject: PassthroughSubject<HomeDataType, Never> { get }
 
     func reloadData()
     func nextData(for dataTypes: [HomeDataType])
@@ -21,10 +21,10 @@ final class HomeModelImpl: HomeModel {
 
     // MARK: - Properties
 
-    var dataChangedCallback: (HomeDataType) -> Void = { _ in }
-
     @MainActor
     private(set) var pagedModels: [HomeDataType: PagedModel<Cinema>]
+
+    let dataChangedSubject: PassthroughSubject<HomeDataType, Never> = PassthroughSubject()
 
     private let networkManager: NetworkManager
 
@@ -32,7 +32,9 @@ final class HomeModelImpl: HomeModel {
 
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.pagedModels = HomeDataType.allCases.reduce(into: [HomeDataType: PagedModel<Cinema>]()) { $0[$1] = PagedModel<Cinema>() }
+        self.pagedModels = HomeDataType.allCases.reduce(into: [HomeDataType: PagedModel<Cinema>]()) {
+            $0[$1] = PagedModel<Cinema>()
+        }
     }
 
     // MARK: - Methods
@@ -79,12 +81,8 @@ private extension HomeModelImpl {
         switch result {
         case .failure(let error): Logger.error(error)
         case .success(let newPagedModel):
-            if newPagedModel.page == 1 {
-                pagedModels[dataType]?.update(newModel: newPagedModel)
-            } else {
-                pagedModels[dataType]?.append(nextModel: newPagedModel)
-            }
-            dataChangedCallback(dataType)
+            pagedModels[dataType]?.setup(with: newPagedModel)
+            dataChangedSubject.send(dataType)
         }
     }
 }

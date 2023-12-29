@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 final class HomeViewController: BaseViewController {
 
@@ -24,6 +25,8 @@ final class HomeViewController: BaseViewController {
 
     // MARK: - Properties
 
+    private var disposeBag: Set<AnyCancellable> = Set<AnyCancellable>()
+
     private let viewModel: HomeViewModel
 
     // MARK: - Initializer
@@ -32,11 +35,6 @@ final class HomeViewController: BaseViewController {
         self.viewModel = viewModel
 
         super.init()
-        
-        self.viewModel.dataChangedCallback = { [weak tableView] dataType in
-            guard let index: Int = HomeDataType.allCases.firstIndex(of: dataType) else { return }
-            tableView?.reloadSections([index], with: .automatic)
-        }
     }
 
     // MARK: - Overrides
@@ -66,12 +64,10 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: CollectionViewTableViewCell = tableView.cell(for: CellIdentifiers.collection)
+        guard let cell: HomeCollectionViewTableViewCell = tableView.cell(for: CellIdentifiers.homeCollection)
         else { return UITableViewCell() }
-        let data: [Cinema]? = viewModel.pagedModels[HomeDataType.allCases[indexPath.section]]?
-            .results
-        let model: CollectionViewTableViewCell.Model = .init(data: data ?? [])
-        cell.setup(with: model)
+        let cinema: [Cinema] = viewModel.pagedModels[HomeDataType.allCases[indexPath.section]]?.results ?? []
+        cell.setup(with: HomeCollectionViewTableViewCell.Model(for: cinema))
 
         return cell
     }
@@ -147,6 +143,7 @@ private extension HomeViewController {
     func configure() {
         configureNavigationBar()
         configureTableView()
+        configureSubscriptions()
     }
 
     func configureNavigationBar() {
@@ -192,5 +189,15 @@ private extension HomeViewController {
         ])
         let size: CGSize = CGSize(width: view.bounds.width, height: 450.0)
         tableView.tableHeaderView = HomeHeaderView(frame: CGRect(origin: .zero, size: size))
+    }
+
+    func configureSubscriptions() {
+        viewModel.dataChangedSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak tableView] dataType in
+                guard let index: Int = HomeDataType.allCases.firstIndex(of: dataType) else { return }
+                tableView?.reloadSections([index], with: .automatic)
+            }
+            .store(in: &disposeBag)
     }
 }

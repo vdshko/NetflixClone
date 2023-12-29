@@ -1,5 +1,5 @@
 //
-//  CollectionViewTableViewCell.swift
+//  HomeCollectionViewTableViewCell.swift
 //  NetflixClone
 //
 //  Created by Vladyslav Shkodych on 06.12.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CollectionViewTableViewCell: UITableViewCell {
+final class HomeCollectionViewTableViewCell: UITableViewCell {
 
     // MARK: - UI
 
@@ -51,17 +51,17 @@ final class CollectionViewTableViewCell: UITableViewCell {
 
 // MARK: - UICollectionViewDataSource
 
-extension CollectionViewTableViewCell: UICollectionViewDataSource {
+extension HomeCollectionViewTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model?.data.count ?? 0
+        return model?.cinema.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: CinemaCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinema, in: indexPath),
-              let data: Cinema = model?.data[indexPath.row]
+        guard let cell: CinemaPosterCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinemaPoster, in: indexPath),
+              let data: Cinema = model?.cinema[indexPath.row]
         else { return UICollectionViewCell() }
-        cell.setup(image: data.posterPath, title: data.originalTitle)
+        cell.setup(image: data.posterPath)
 
         return cell
     }
@@ -69,7 +69,7 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension CollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {
+extension HomeCollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -85,7 +85,7 @@ extension CollectionViewTableViewCell: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Private methods
 
-private extension CollectionViewTableViewCell {
+private extension HomeCollectionViewTableViewCell {
 
     func configure() {
         configureUI()

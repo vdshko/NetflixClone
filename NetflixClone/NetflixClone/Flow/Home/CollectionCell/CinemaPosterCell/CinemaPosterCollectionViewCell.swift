@@ -1,5 +1,5 @@
 //
-//  CinemaCollectionViewCell.swift
+//  CinemaPosterCollectionViewCell.swift
 //  NetflixClone
 //
 //  Created by Vladyslav Shkodych on 26.12.2023.
@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-final class CinemaCollectionViewCell: UICollectionViewCell {
+final class CinemaPosterCollectionViewCell: UICollectionViewCell {
 
     // MARK: - UI
 
@@ -19,19 +19,6 @@ final class CinemaCollectionViewCell: UICollectionViewCell {
         
         return imageView
     }()
-
-    private let titleLabel: UILabel = {
-        let label: UILabel = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
-    }()
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        imageView.kf.cancelDownloadTask()
-    }
 
     // MARK: - Initializers
     
@@ -45,31 +32,34 @@ final class CinemaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Overrides
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        imageView.kf.cancelDownloadTask()
+    }
+
     // MARK: - Methods
 
-    func setup(image path: String?, title: String?) {
+    func setup(image path: String?) {
         imageView.kf.setImage(for: path)
-        titleLabel.text = title
     }
 }
 
 // MARK: - Private methods
 
-private extension CinemaCollectionViewCell {
+private extension CinemaPosterCollectionViewCell {
 
     func configure() {
         contentView.layer.cornerRadius = 4.0
         contentView.clipsToBounds = true
-        [imageView, titleLabel].forEach { contentView.addSubview($0) }
+        contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }
