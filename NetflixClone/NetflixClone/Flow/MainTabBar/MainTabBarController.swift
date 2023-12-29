@@ -21,6 +21,8 @@ final class MainTabBarController: UITabBarController {
         self.networkManager = networkManager
 
         super.init(nibName: nil, bundle: nil)
+
+        requestConfigurationDetails()
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +53,6 @@ private extension MainTabBarController {
     func configure() {
         configureTabs()
         configureUI()
-        requestConfigurationDetails()
     }
 
     func configureTabs() {
@@ -61,7 +62,11 @@ private extension MainTabBarController {
                     model: HomeModelImpl(networkManager: networkManager)
                 )
             ),
-            UpcomingViewController(),
+            UpcomingViewController(
+                viewModel: UpcomingViewModelImpl(
+                    model: UpcomingModelImpl(networkManager: networkManager)
+                )
+            ),
             SearchViewController(),
             DownloadsViewController()
         ].map(UINavigationController.init)
