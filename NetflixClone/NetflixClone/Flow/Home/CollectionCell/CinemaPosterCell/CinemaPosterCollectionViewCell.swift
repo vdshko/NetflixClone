@@ -38,6 +38,7 @@ final class CinemaPosterCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
 
         imageView.kf.cancelDownloadTask()
+        imageView.image = nil
     }
 
     // MARK: - Methods
@@ -52,7 +53,7 @@ final class CinemaPosterCollectionViewCell: UICollectionViewCell {
 private extension CinemaPosterCollectionViewCell {
 
     func configure() {
-        contentView.layer.cornerRadius = 4.0
+        contentView.layer.cornerRadius = Constants.Layout.cornerRadius
         contentView.clipsToBounds = true
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([

@@ -16,7 +16,6 @@ final class UpcomingViewController: BaseViewController {
         let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .systemBackground
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -25,7 +24,7 @@ final class UpcomingViewController: BaseViewController {
 
     // MARK: - Properties
 
-    private var disposeBag: Set<AnyCancellable> = Set<AnyCancellable>()
+    private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
     private let viewModel: UpcomingViewModel
 
@@ -56,10 +55,15 @@ extension UpcomingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: UITableViewCell = tableView.cell(for: CellIdentifiers.default)
+        guard let cell: UpcomingCinemaTableViewCell = tableView.cell(for: CellIdentifiers.upcomingCinema)
         else { return UITableViewCell() }
         let model: Cinema = viewModel.pagedModel.results[indexPath.row]
-        cell.textLabel?.text = model.title ?? model.originalTitle
+        cell.setup(
+            with: .init(
+                title: model.title ?? model.originalTitle,
+                path: model.posterPath
+            )
+        )
 
         return cell
     }
@@ -68,10 +72,6 @@ extension UpcomingViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension UpcomingViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40.0
-    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -84,17 +84,10 @@ extension UpcomingViewController: TabBarSelectable {
 
     func handleTabItemTap(isPreviouslySelected: Bool) {
         guard isPreviouslySelected else { return }
-        let percent2HeightOfScreen: CGFloat
-        if let height: CGFloat = UIApplication.shared.rootViewController?.view.bounds.height {
-            percent2HeightOfScreen = height * 0.02
-        } else {
-            percent2HeightOfScreen = 30.0
-        }
-        let navigationBarBackgroundHeight: CGFloat = navigationController?.navigationBar.subviews
-            .first { NSStringFromClass($0.classForCoder) == "_UIBarBackground" }?
-            .frame.height ?? 0.0
-        guard tableView.contentOffset.y + navigationBarBackgroundHeight > percent2HeightOfScreen else { return }
-        tableView.setContentOffset(CGPoint(x: 0.0, y: -navigationBarBackgroundHeight), animated: true)
+        guard tableView.numberOfSections > 0,
+              tableView.numberOfRows(inSection: 0) > 0
+        else { return }
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 }
 
@@ -105,7 +98,7 @@ private extension UpcomingViewController {
     func configure() {
         configureUI()
         configureTableView()
-        configureSubscriptions()
+        configureBinding()
     }
 
     func configureUI() {
@@ -124,10 +117,10 @@ private extension UpcomingViewController {
         ])
     }
 
-    func configureSubscriptions() {
+    func configureBinding() {
         viewModel.dataChangedSubject
             .receive(on: RunLoop.main)
             .sink { [weak tableView] _ in tableView?.reloadData() }
-            .store(in: &disposeBag)
+            .store(in: &cancelBag)
     }
 }
