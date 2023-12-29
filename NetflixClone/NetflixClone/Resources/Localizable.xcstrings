@@ -78,6 +78,17 @@
         }
       }
     },
+    "search.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        }
+      }
+    },
     "tab.downloads" : {
       "extractionState" : "manual",
       "localizations" : {
