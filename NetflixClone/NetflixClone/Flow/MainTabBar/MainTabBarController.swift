@@ -67,7 +67,11 @@ private extension MainTabBarController {
                     model: UpcomingModelImpl(networkManager: networkManager)
                 )
             ),
-            SearchViewController(),
+            SearchViewController(
+                viewModel: SearchViewModelImpl(
+                    model: SearchModelImpl(networkManager: networkManager)
+                )
+            ),
             DownloadsViewController()
         ].map(UINavigationController.init)
         zip(tabControllers, Tabs.allCases).forEach {

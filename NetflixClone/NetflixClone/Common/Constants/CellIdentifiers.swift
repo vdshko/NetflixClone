@@ -14,4 +14,5 @@ enum CellIdentifiers {
     static let homeCollection: String = String(describing: HomeCollectionViewTableViewCell.self)
     static let cinemaPoster: String = String(describing: CinemaPosterCollectionViewCell.self)
     static let upcomingCinema: String = String(describing: UpcomingCinemaTableViewCell.self)
+    static let searchCinema: String = String(describing: SearchCinemaTableViewCell.self)
 }
