@@ -11,7 +11,7 @@ final class MainTabBarController: UITabBarController {
 
     // MARK: - Properties
 
-    private var previousSelectedTabIndex: Int = 0
+    private var previousSelectedTabIndex: Int = Tabs.search.rawValue
 
     private let networkManager: NetworkManager
 
@@ -103,7 +103,7 @@ private extension MainTabBarController {
 
 extension MainTabBarController {
 
-    enum Tabs: CaseIterable {
+    enum Tabs: Int, CaseIterable {
 
         case home
         case upcoming
