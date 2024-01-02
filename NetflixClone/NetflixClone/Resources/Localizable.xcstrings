@@ -84,7 +84,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search"
+            "value" : "Discover"
           }
         }
       }
@@ -117,23 +117,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Top Search"
+            "value" : "Search"
           }
         }
       }
     },
     "tab.upcoming" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Coming Soon"
-          }
-        }
-      }
-    },
-    "upcoming.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

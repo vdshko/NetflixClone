@@ -102,7 +102,7 @@ private extension UpcomingViewController {
     }
 
     func configureUI() {
-        title = String(localized: "upcoming.title")
+        navigationItem.title = String(localized: "tab.upcoming")
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
     }
