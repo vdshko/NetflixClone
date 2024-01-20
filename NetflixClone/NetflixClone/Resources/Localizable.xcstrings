@@ -78,6 +78,17 @@
         }
       }
     },
+    "search.search_controller.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for a Movie or Tv show..."
+          }
+        }
+      }
+    },
     "search.title" : {
       "extractionState" : "manual",
       "localizations" : {

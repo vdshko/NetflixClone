@@ -5,7 +5,7 @@
 //  Created by Vladyslav Shkodych on 05.12.2023.
 //
 
-import UIKit
+import SwiftUI
 
 final class MainTabBarController: UITabBarController {
 
@@ -44,6 +44,22 @@ final class MainTabBarController: UITabBarController {
         ((viewControllers?[index] as? UINavigationController)?.topViewController as? TabBarSelectable)?
             .handleTabItemTap(isPreviouslySelected: isEqualTabIndex)
     }
+
+    // MARK: - Methods
+
+    static var isTabBarHidden = false
+    static func setTabBarHidden(_ isHidden: Bool, animated: Bool) {
+            guard isTabBarHidden != isHidden else { return }
+
+            let frameHeight = tabBar.frame.size.height
+            let offsetY = isHidden ? frameHeight : -frameHeight
+
+            let duration = animated ? 0.3 : 0.0
+
+            UIView.animate(withDuration: duration) {
+                self.tabBar.frame.origin.y += offsetY
+            }
+        }
 }
 
 // MARK: - Private methods
@@ -128,4 +144,23 @@ extension MainTabBarController {
             }
         }
     }
+}
+
+// MARK: - Preview
+
+private struct MainTabBarControllerRepresentable: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
+        let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
+
+        return MainTabBarController(networkManager: networkManager)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+@available(iOS 17, *)
+#Preview {
+    MainTabBarControllerRepresentable()
 }
