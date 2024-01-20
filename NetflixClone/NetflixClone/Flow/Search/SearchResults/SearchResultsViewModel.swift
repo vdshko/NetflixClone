@@ -1,35 +1,34 @@
 //
-//  SearchViewModel.swift
+//  SearchResultsViewModel.swift
 //  NetflixClone
 //
-//  Created by Vladyslav Shkodych on 30.12.2023.
+//  Created by Vladyslav Shkodych on 20.01.2024.
 //
 
 import Foundation
 import Combine
 
-protocol SearchViewModel: AnyObject {
+protocol SearchResultsViewModel: AnyObject {
 
     var pagedModel: PagedModel<Cinema> { get }
     var dataChangedSubject: PassthroughSubject<Void, Never> { get }
 
     func reloadData()
     func nextData()
-    func createSearchResultsViewModel() -> SearchResultsViewModel
 }
 
-final class SearchViewModelImpl: SearchViewModel {
+final class SearchResultsViewModelImpl: SearchResultsViewModel {
 
     // MARK: - Properties
 
     var pagedModel: PagedModel<Cinema> { return model.pagedModel }
     var dataChangedSubject: PassthroughSubject<Void, Never> { return model.dataChangedSubject }
 
-    private let model: SearchModel
+    private let model: SearchResultsModel
 
     // MARK: - Initializer
 
-    init(model: SearchModel) {
+    init(model: SearchResultsModel) {
         self.model = model
     }
 
@@ -41,9 +40,5 @@ final class SearchViewModelImpl: SearchViewModel {
 
     func nextData() {
         model.nextData()
-    }
-
-    func createSearchResultsViewModel() -> SearchResultsViewModel {
-        return SearchResultsViewModelImpl(model: model.createSearchResultsModel())
     }
 }

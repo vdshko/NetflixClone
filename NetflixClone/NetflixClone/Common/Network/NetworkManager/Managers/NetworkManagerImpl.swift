@@ -9,6 +9,8 @@ import Foundation
 
 final class NetworkManagerImpl: NetworkManager {
 
+    fileprivate init() {}
+
     private lazy var jsonDecoder: JSONDecoder = {
         let decoder: JSONDecoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -48,5 +50,12 @@ final class NetworkManagerImpl: NetworkManager {
         } catch {
             return .failure(NetworkManagerError.other(error))
         }
+    }
+}
+
+extension NetworkManagerFactoryImpl {
+
+    func createNetworkManager() -> NetworkManager {
+        return NetworkManagerImpl()
     }
 }

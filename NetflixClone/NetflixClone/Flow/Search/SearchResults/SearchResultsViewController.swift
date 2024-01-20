@@ -1,14 +1,14 @@
 //
-//  SearchViewController.swift
+//  SearchResultsViewController.swift
 //  NetflixClone
 //
-//  Created by Vladyslav Shkodych on 05.12.2023.
+//  Created by Vladyslav Shkodych on 20.01.2024.
 //
 
 import SwiftUI
 import Combine
 
-final class SearchViewController: BaseViewController {
+final class SearchResultsViewController: BaseViewController {
 
     // MARK: - UI
 
@@ -22,30 +22,20 @@ final class SearchViewController: BaseViewController {
         return tableView
     }()
 
-    private lazy var searchController: UISearchController = {
-        let searchController: UISearchController = UISearchController(
-            searchResultsController: SearchResultsViewController(
-                viewModel: viewModel.createSearchResultsViewModel()
-            )
-        )
-        searchController.searchBar.placeholder = String(localized: "search.search_controller.placeholder")
-        searchController.searchBar.searchBarStyle = .minimal
-
-        return searchController
-    }()
-
     // MARK: - Properties
 
     private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
-    private let viewModel: SearchViewModel
+    private let viewModel: SearchResultsViewModel
 
     // MARK: - Initializer
 
-    init(viewModel: SearchViewModel) {
+    init(viewModel: SearchResultsViewModel) {
         self.viewModel = viewModel
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     // MARK: - Overrides
@@ -56,11 +46,16 @@ final class SearchViewController: BaseViewController {
         configure()
         viewModel.reloadData()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
 }
 
 // MARK: - UITableViewDataSource
 
-extension SearchViewController: UITableViewDataSource {
+extension SearchResultsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.pagedModel.results.count
@@ -83,29 +78,16 @@ extension SearchViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension SearchViewController: UITableViewDelegate {
+extension SearchResultsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-// MARK: - TabBarUpdatable
-
-extension SearchViewController: TabBarSelectable {
-
-    func handleTabItemTap(isPreviouslySelected: Bool) {
-        guard isPreviouslySelected else { return }
-        guard tableView.numberOfSections > 0,
-              tableView.numberOfRows(inSection: 0) > 0
-        else { return }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
-    }
-}
-
 // MARK: - Private methods
-    
-private extension SearchViewController {
+
+private extension SearchResultsViewController {
 
     func configure() {
         configureUI()
@@ -114,10 +96,10 @@ private extension SearchViewController {
 
     func configureUI() {
         navigationItem.title = String(localized: "search.title")
-        navigationItem.searchController = searchController
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        configureTableView()
+        view.backgroundColor = .systemBackground
+//        configureTableView()
     }
 
     func configureTableView() {
@@ -140,15 +122,15 @@ private extension SearchViewController {
 
 // MARK: - Preview
 
-private struct SearchViewControllerRepresentable: UIViewControllerRepresentable {
+private struct SearchResultsViewControllerRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
         let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
         let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
-        
-        return SearchViewController(
-            viewModel: SearchViewModelImpl(
-                model: SearchModelImpl(networkManager: networkManager)
+
+        return SearchResultsViewController(
+            viewModel: SearchResultsViewModelImpl(
+                model: SearchResultsModelImpl(networkManager: networkManager)
             )
         )
     }
@@ -158,5 +140,5 @@ private struct SearchViewControllerRepresentable: UIViewControllerRepresentable 
 
 @available(iOS 17, *)
 #Preview {
-    SearchViewControllerRepresentable()
+    SearchResultsViewControllerRepresentable()
 }
