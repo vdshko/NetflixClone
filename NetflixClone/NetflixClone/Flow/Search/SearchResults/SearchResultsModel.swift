@@ -1,24 +1,23 @@
 //
-//  SearchModel.swift
+//  SearchResultsModel.swift
 //  NetflixClone
 //
-//  Created by Vladyslav Shkodych on 30.12.2023.
+//  Created by Vladyslav Shkodych on 20.01.2024.
 //
 
 import Foundation
 import Combine
 
-protocol SearchModel: AnyObject {
+protocol SearchResultsModel: AnyObject {
 
     var pagedModel: PagedModel<Cinema> { get }
     var dataChangedSubject: PassthroughSubject<Void, Never> { get }
 
     func reloadData()
     func nextData()
-    func createSearchResultsModel() -> SearchResultsModel
 }
 
-final class SearchModelImpl: SearchModel {
+final class SearchResultsModelImpl: SearchResultsModel {
 
     // MARK: - Properties
 
@@ -46,15 +45,11 @@ final class SearchModelImpl: SearchModel {
     func nextData() {
         updateData()
     }
-
-    func createSearchResultsModel() -> SearchResultsModel {
-        return SearchResultsModelImpl(networkManager: networkManager)
-    }
 }
 
 // MARK: - Private methods
 
-private extension SearchModelImpl {
+private extension SearchResultsModelImpl {
 
     func updateData() {
         Task {

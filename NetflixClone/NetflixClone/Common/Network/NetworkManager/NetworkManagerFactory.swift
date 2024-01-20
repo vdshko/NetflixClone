@@ -14,13 +14,6 @@ protocol NetworkManagerFactory: AnyObject {
     func createNetworkManagerSpy() -> NetworkManager
 }
 
-final class NetworkManagerFactoryImpl: NetworkManagerFactory {
-
-    func createNetworkManager() -> NetworkManager {
-        return NetworkManagerImpl()
-    }
-
-    func createNetworkManagerSpy() -> NetworkManager {
-        return NetworkManagerSpy()
-    }
-}
+// Each NetworkManager implementation has a file-private initializer due to encapsulation.
+// Protocol method realized in the NetworkManagerFactoryImpl extensions and placed into dedicated files.
+final class NetworkManagerFactoryImpl: NetworkManagerFactory {}
