@@ -26,12 +26,12 @@ final class UpcomingModelImpl: UpcomingModel {
 
     let dataChangedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
 
-    private let networkManager: NetworkManager
+    private let diContainer: DIContainer
 
     // MARK: - Initializer
 
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
+    init(diContainer: DIContainer) {
+        self.diContainer = diContainer
     }
     
     // MARK: - Methods
@@ -54,7 +54,7 @@ private extension UpcomingModelImpl {
     func updateData() {
         Task {
             async let model = MainActor.run { return pagedModel }
-            let result: PagedResponse<Cinema> = await Requests.Movie.upcoming(networkManager: networkManager, pagedModel: model)
+            let result: PagedResponse<Cinema> = await Requests.Movie.upcoming(networkManager: diContainer.networkManager, pagedModel: model)
             await MainActor.run {
                 switch result {
                 case .failure(let error): Logger.error(error)

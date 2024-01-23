@@ -145,10 +145,14 @@ private struct SearchViewControllerRepresentable: UIViewControllerRepresentable 
     func makeUIViewController(context: Context) -> UIViewController {
         let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
         let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
-        
+        let diContainer: DIContainer = DIContainer(
+            appState: AppState(),
+            networkManager: networkManager
+        )
+
         return SearchViewController(
             viewModel: SearchViewModelImpl(
-                model: SearchModelImpl(networkManager: networkManager)
+                model: SearchModelImpl(diContainer: diContainer)
             )
         )
     }
