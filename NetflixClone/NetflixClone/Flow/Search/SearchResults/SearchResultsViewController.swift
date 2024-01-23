@@ -50,6 +50,13 @@ final class SearchResultsViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        viewModel.hideTabbar()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        viewModel.showTabbar()
     }
 }
 
@@ -127,10 +134,14 @@ private struct SearchResultsViewControllerRepresentable: UIViewControllerReprese
     func makeUIViewController(context: Context) -> UIViewController {
         let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
         let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
+        let diContainer: DIContainer = DIContainer(
+            appState: AppState(),
+            networkManager: networkManager
+        )
 
         return SearchResultsViewController(
             viewModel: SearchResultsViewModelImpl(
-                model: SearchResultsModelImpl(networkManager: networkManager)
+                model: SearchResultsModelImpl(diContainer: diContainer)
             )
         )
     }

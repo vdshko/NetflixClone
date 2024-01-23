@@ -6,19 +6,21 @@
 //
 
 import SwiftUI
+import Combine
 
 final class MainTabBarController: UITabBarController {
 
     // MARK: - Properties
 
     private var previousSelectedTabIndex: Int = Tabs.search.rawValue
+    private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
-    private let networkManager: NetworkManager
+    private let diContainer: DIContainer
 
     // MARK: - Initializers
 
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
+    init(diContainer: DIContainer) {
+        self.diContainer = diContainer
 
         super.init(nibName: nil, bundle: nil)
 
@@ -44,22 +46,6 @@ final class MainTabBarController: UITabBarController {
         ((viewControllers?[index] as? UINavigationController)?.topViewController as? TabBarSelectable)?
             .handleTabItemTap(isPreviouslySelected: isEqualTabIndex)
     }
-
-    // MARK: - Methods
-
-    static var isTabBarHidden = false
-    static func setTabBarHidden(_ isHidden: Bool, animated: Bool) {
-            guard isTabBarHidden != isHidden else { return }
-
-            let frameHeight = tabBar.frame.size.height
-            let offsetY = isHidden ? frameHeight : -frameHeight
-
-            let duration = animated ? 0.3 : 0.0
-
-            UIView.animate(withDuration: duration) {
-                self.tabBar.frame.origin.y += offsetY
-            }
-        }
 }
 
 // MARK: - Private methods
@@ -69,23 +55,24 @@ private extension MainTabBarController {
     func configure() {
         configureTabs()
         configureUI()
+        configureBinding()
     }
 
     func configureTabs() {
         let tabControllers: [UINavigationController] = [
             HomeViewController(
                 viewModel: HomeViewModelImpl(
-                    model: HomeModelImpl(networkManager: networkManager)
+                    model: HomeModelImpl(diContainer: diContainer)
                 )
             ),
             UpcomingViewController(
                 viewModel: UpcomingViewModelImpl(
-                    model: UpcomingModelImpl(networkManager: networkManager)
+                    model: UpcomingModelImpl(diContainer: diContainer)
                 )
             ),
             SearchViewController(
                 viewModel: SearchViewModelImpl(
-                    model: SearchModelImpl(networkManager: networkManager)
+                    model: SearchModelImpl(diContainer: diContainer)
                 )
             ),
             DownloadsViewController()
@@ -105,12 +92,40 @@ private extension MainTabBarController {
 
     func requestConfigurationDetails() {
         Task(priority: .high) {
-            let result: Response<ConfigurationDetails> = await Requests.Configuration.details(networkManager: networkManager)
+            let result: Response<ConfigurationDetails> = await Requests.Configuration.details(networkManager: diContainer.networkManager)
             switch result {
             case .failure(let error): Logger.error(error)
             case .success(let details):
                 Requests.Constants.Images.updateBaseUrl(to: details.images.secureBaseUrl)
             }
+        }
+    }
+
+    func configureBinding() {
+        diContainer.appState.$isTabBarHidden
+            .receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink { [weak self] _ in self?.toggleTabBar() }
+            .store(in: &cancelBag)
+    }
+
+    func toggleTabBar() {
+        UIView.animate(
+            withDuration: 1.0,
+            delay: 0,
+            usingSpringWithDamping: 0.8,
+            initialSpringVelocity: 0.7,
+            options: .curveEaseOut
+        ) {
+            let nextOriginY: CGFloat = self.tabBar.frame.height + (UIApplication.shared.rootViewController?.view.safeAreaInsets.bottom ?? 0.0)
+            if self.diContainer.appState.isTabBarHidden {
+                self.tabBar.frame.origin.y += nextOriginY
+                self.tabBar.alpha = 0
+            } else {
+                self.tabBar.frame.origin.y -= nextOriginY
+                self.tabBar.alpha = 1
+            }
+            self.view.layoutIfNeeded()
         }
     }
 }
@@ -153,8 +168,12 @@ private struct MainTabBarControllerRepresentable: UIViewControllerRepresentable 
     func makeUIViewController(context: Context) -> UIViewController {
         let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
         let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
+        let diContainer: DIContainer = DIContainer(
+            appState: AppState(),
+            networkManager: networkManager
+        )
 
-        return MainTabBarController(networkManager: networkManager)
+        return MainTabBarController(diContainer: diContainer)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

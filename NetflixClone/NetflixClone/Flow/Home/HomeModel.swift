@@ -26,12 +26,12 @@ final class HomeModelImpl: HomeModel {
 
     let dataChangedSubject: PassthroughSubject<HomeDataType, Never> = PassthroughSubject()
 
-    private let networkManager: NetworkManager
+    private let diContainer: DIContainer
 
     // MARK: - Initializer
 
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
+    init(diContainer: DIContainer) {
+        self.diContainer = diContainer
         self.pagedModels = HomeDataType.allCases.reduce(into: [HomeDataType: PagedModel<Cinema>]()) {
             $0[$1] = PagedModel<Cinema>()
         }
@@ -65,12 +65,12 @@ private extension HomeModelImpl {
             switch dataType {
             case .trending(let mediaType):
                 switch mediaType {
-                case .movie: result = await Requests.Trending.movie(networkManager: networkManager, pagedModel: model)
-                case .tv: result = await Requests.Trending.tv(networkManager: networkManager, pagedModel: model)
+                case .movie: result = await Requests.Trending.movie(networkManager: diContainer.networkManager, pagedModel: model)
+                case .tv: result = await Requests.Trending.tv(networkManager: diContainer.networkManager, pagedModel: model)
                 }
-            case .popular: result = await Requests.Movie.popular(networkManager: networkManager, pagedModel: model)
-            case .upcoming: result = await Requests.Movie.upcoming(networkManager: networkManager, pagedModel: model)
-            case .topRated: result = await Requests.Movie.topRated(networkManager: networkManager, pagedModel: model)
+            case .popular: result = await Requests.Movie.popular(networkManager: diContainer.networkManager, pagedModel: model)
+            case .upcoming: result = await Requests.Movie.upcoming(networkManager: diContainer.networkManager, pagedModel: model)
+            case .topRated: result = await Requests.Movie.topRated(networkManager: diContainer.networkManager, pagedModel: model)
             }
             await handleUpdates(result, for: dataType)
         }

@@ -37,6 +37,8 @@
 		A1735AD62B33B13B002C11FA /* URLRequestBuilder+Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1735AD52B33B13B002C11FA /* URLRequestBuilder+Requests.swift */; };
 		A1735AD82B33B3BE002C11FA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1735AD72B33B3BE002C11FA /* Logger.swift */; };
 		A1735ADA2B33B867002C11FA /* Requests+Trending.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1735AD92B33B867002C11FA /* Requests+Trending.swift */; };
+		A175C3CB2B5F370300852CD0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175C3CA2B5F370300852CD0 /* AppState.swift */; };
+		A175C3CD2B5F379200852CD0 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175C3CC2B5F379200852CD0 /* DIContainer.swift */; };
 		A17F0ACA2B32785300FAC765 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F0AC92B32785300FAC765 /* BaseViewController.swift */; };
 		A182F4272B5B4C8C00FD84EE /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A182F4262B5B4C8C00FD84EE /* SearchResultsViewController.swift */; };
 		A182F4292B5B4C9E00FD84EE /* SearchResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A182F4282B5B4C9E00FD84EE /* SearchResultsViewModel.swift */; };
@@ -103,6 +105,8 @@
 		A1735AD52B33B13B002C11FA /* URLRequestBuilder+Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequestBuilder+Requests.swift"; sourceTree = "<group>"; };
 		A1735AD72B33B3BE002C11FA /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A1735AD92B33B867002C11FA /* Requests+Trending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Requests+Trending.swift"; sourceTree = "<group>"; };
+		A175C3CA2B5F370300852CD0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		A175C3CC2B5F379200852CD0 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		A17F0AC92B32785300FAC765 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A182F4262B5B4C8C00FD84EE /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		A182F4282B5B4C9E00FD84EE /* SearchResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModel.swift; sourceTree = "<group>"; };
@@ -157,8 +161,10 @@
 		A11922462B1FD08500AF2018 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A175C3CA2B5F370300852CD0 /* AppState.swift */,
 				A16B353A2B32749800A38050 /* Base */,
 				A11922472B1FD09100AF2018 /* Constants */,
+				A175C3CC2B5F379200852CD0 /* DIContainer.swift */,
 				A11922532B1FDB3C00AF2018 /* Extensions */,
 				A1735AD72B33B3BE002C11FA /* Logger.swift */,
 				A16B352B2B32663900A38050 /* Network */,
@@ -595,6 +601,7 @@
 				A1A677CF2B3F89FD0086A6BF /* SearchCinemaTableViewCell.swift in Sources */,
 				A182F4272B5B4C8C00FD84EE /* SearchResultsViewController.swift in Sources */,
 				A16B352D2B32665800A38050 /* NetworkManager.swift in Sources */,
+				A175C3CB2B5F370300852CD0 /* AppState.swift in Sources */,
 				A182F4292B5B4C9E00FD84EE /* SearchResultsViewModel.swift in Sources */,
 				A1DB1C7A2B34EDBC00D19ED1 /* PagedModel.swift in Sources */,
 				A119225A2B1FE55A00AF2018 /* HomeCollectionViewTableViewCellModel.swift in Sources */,
@@ -603,6 +610,7 @@
 				A1DB1C7E2B34FED900D19ED1 /* NetworkManagerError.swift in Sources */,
 				A120D35A2B1EA08F00D2B685 /* SearchViewController.swift in Sources */,
 				A119224E2B1FD9FF00AF2018 /* HomeViewModel.swift in Sources */,
+				A175C3CD2B5F379200852CD0 /* DIContainer.swift in Sources */,
 				A1735AC12B339FB2002C11FA /* NetworkManagerSpy.swift in Sources */,
 				A1735AD82B33B3BE002C11FA /* Logger.swift in Sources */,
 				A1735ADA2B33B867002C11FA /* Requests+Trending.swift in Sources */,
