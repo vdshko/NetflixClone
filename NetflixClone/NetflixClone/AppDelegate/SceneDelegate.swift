@@ -22,7 +22,11 @@ extension SceneDelegate: UIWindowSceneDelegate {
         window?.windowScene = windowScene
         let networkManagerFactory: NetworkManagerFactory = NetworkManagerFactoryImpl()
         let networkManager: NetworkManager = networkManagerFactory.createNetworkManager()
-        window?.rootViewController = MainTabBarController(networkManager: networkManager)
+        let diContainer: DIContainer = DIContainer(
+            appState: AppState(),
+            networkManager: networkManager
+        )
+        window?.rootViewController = MainTabBarController(diContainer: diContainer)
         window?.makeKeyAndVisible()
     }
 }

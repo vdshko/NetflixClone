@@ -15,6 +15,8 @@ protocol SearchResultsViewModel: AnyObject {
 
     func reloadData()
     func nextData()
+    func hideTabbar()
+    func showTabbar()
 }
 
 final class SearchResultsViewModelImpl: SearchResultsViewModel {
@@ -40,5 +42,13 @@ final class SearchResultsViewModelImpl: SearchResultsViewModel {
 
     func nextData() {
         model.nextData()
+    }
+
+    func hideTabbar() {
+        model.hideTabbar()
+    }
+
+    func showTabbar() {
+        model.showTabbar()
     }
 }
