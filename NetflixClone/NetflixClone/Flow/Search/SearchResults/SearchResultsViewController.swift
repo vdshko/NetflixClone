@@ -12,18 +12,22 @@ final class SearchResultsViewController: BaseViewController {
 
     // MARK: - UI
 
-    private lazy var tableView: UITableView = {
-        let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var collectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let size: CGSize = UIApplication.shared.rootViewController?.view.bounds.size ?? CGSize(width: 100.0, height: 200.0)
+        layout.itemSize = CGSize(width: size.width / 3.0 - 10.0, height: 200.0)
+        layout.minimumInteritemSpacing = 0.0
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        return tableView
+        return collectionView
     }()
 
     // MARK: - Properties
 
+    private var searchQuery: String?
     private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
     private let viewModel: SearchResultsViewModel
@@ -58,37 +62,39 @@ final class SearchResultsViewController: BaseViewController {
 
         viewModel.showTabbar()
     }
+
+    // MARK: - Methods
+
+    func updateSearchQuery(with searchQuery: String?) {
+        self.searchQuery = searchQuery
+        viewModel.updateSearchQuery(with: searchQuery)
+    }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UICollectionViewDataSource
 
-extension SearchResultsViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SearchResultsViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.pagedModel.results.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: SearchCinemaTableViewCell = tableView.cell(for: CellIdentifiers.searchCinema)
-        else { return UITableViewCell() }
-        let model: Cinema = viewModel.pagedModel.results[indexPath.row]
-        cell.setup(
-            with: .init(
-                title: model.title ?? model.originalTitle,
-                path: model.posterPath
-            )
-        )
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell: CinemaPosterCollectionViewCell = collectionView.cell(for: CellIdentifiers.cinemaPoster, in: indexPath)
+        else { return UICollectionViewCell() }
+        let data: Cinema = viewModel.pagedModel.results[indexPath.row]
+        cell.setup(image: data.posterPath)
 
         return cell
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - UICollectionViewDelegate
 
-extension SearchResultsViewController: UITableViewDelegate {
+extension SearchResultsViewController: UICollectionViewDelegate {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
@@ -106,23 +112,23 @@ private extension SearchResultsViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         view.backgroundColor = .systemBackground
-//        configureTableView()
+        configureCollectionView()
     }
 
-    func configureTableView() {
-        view.addSubview(tableView)
+    func configureCollectionView() {
+        view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
     func configureBinding() {
         viewModel.dataChangedSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak tableView] _ in tableView?.reloadData() }
+            .sink { [weak collectionView] _ in collectionView?.reloadData() }
             .store(in: &cancelBag)
     }
 }

@@ -13,6 +13,7 @@ protocol SearchResultsViewModel: AnyObject {
     var pagedModel: PagedModel<Cinema> { get }
     var dataChangedSubject: PassthroughSubject<Void, Never> { get }
 
+    func updateSearchQuery(with searchQuery: String?)
     func reloadData()
     func nextData()
     func hideTabbar()
@@ -35,6 +36,11 @@ final class SearchResultsViewModelImpl: SearchResultsViewModel {
     }
 
     // MARK: - Methods
+
+    func updateSearchQuery(with searchQuery: String?) {
+        guard let searchQuery, searchQuery.count >= 3 else { return }
+        model.updateSearchQuery(with: searchQuery)
+    }
 
     func reloadData() {
         model.reloadData()
