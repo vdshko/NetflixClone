@@ -13,6 +13,7 @@ protocol SearchResultsModel: AnyObject {
     var pagedModel: PagedModel<Cinema> { get }
     var dataChangedSubject: PassthroughSubject<Void, Never> { get }
 
+    func updateSearchQuery(with searchQuery: String)
     func reloadData()
     func nextData()
     func hideTabbar()
@@ -39,6 +40,12 @@ final class SearchResultsModelImpl: SearchResultsModel {
     // MARK: - Methods
 
     @MainActor
+    func updateSearchQuery(with searchQuery: String) {
+        pagedModel = PagedModel()
+        updateData(searchQuery: searchQuery)
+    }
+
+    @MainActor
     func reloadData() {
         pagedModel = PagedModel()
         updateData()
@@ -61,10 +68,11 @@ final class SearchResultsModelImpl: SearchResultsModel {
 
 private extension SearchResultsModelImpl {
 
-    func updateData() {
+    func updateData(searchQuery: String = "") {
         Task {
+            guard !searchQuery.isEmpty else { return }
             async let model = MainActor.run { return pagedModel }
-            let result: PagedResponse<Cinema> = await Requests.Discover.movies(networkManager: diContainer.networkManager, pagedModel: model)
+            let result: PagedResponse<Cinema> = await Requests.Search.movies(networkManager: diContainer.networkManager, pagedModel: model, query: searchQuery)
             await MainActor.run {
                 switch result {
                 case .failure(let error): Logger.error(error)

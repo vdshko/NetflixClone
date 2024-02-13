@@ -100,17 +100,6 @@
         }
       }
     },
-    "tab.downloads" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Downloads"
-          }
-        }
-      }
-    },
     "tab.home" : {
       "extractionState" : "manual",
       "localizations" : {

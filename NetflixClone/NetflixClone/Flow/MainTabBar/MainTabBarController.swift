@@ -12,7 +12,7 @@ final class MainTabBarController: UITabBarController {
 
     // MARK: - Properties
 
-    private var previousSelectedTabIndex: Int = Tabs.search.rawValue
+    private var previousSelectedTabIndex: Int = Tabs.home.rawValue
     private var cancelBag: Set<AnyCancellable> = Set<AnyCancellable>()
 
     private let diContainer: DIContainer
@@ -74,8 +74,7 @@ private extension MainTabBarController {
                 viewModel: SearchViewModelImpl(
                     model: SearchModelImpl(diContainer: diContainer)
                 )
-            ),
-            DownloadsViewController()
+            )
         ].map(UINavigationController.init)
         zip(tabControllers, Tabs.allCases).forEach {
             $0.0.title = $0.1.title
@@ -139,14 +138,12 @@ extension MainTabBarController {
         case home
         case upcoming
         case search
-        case downloads
 
         var title: String {
             switch self {
             case .home: return String(localized: "tab.home")
             case .upcoming: return String(localized: "tab.upcoming")
             case .search: return String(localized: "tab.search")
-            case .downloads: return String(localized: "tab.downloads")
             }
         }
 
@@ -155,7 +152,6 @@ extension MainTabBarController {
             case .home: return UIImage(systemName: "house")
             case .upcoming: return UIImage(systemName: "play.circle")
             case .search: return UIImage(systemName: "magnifyingglass")
-            case .downloads: return UIImage(systemName: "arrow.down.to.line")
             }
         }
     }

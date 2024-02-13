@@ -28,6 +28,7 @@ final class SearchViewController: BaseViewController {
                 viewModel: viewModel.createSearchResultsViewModel()
             )
         )
+        searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = String(localized: "search.search_controller.placeholder")
         searchController.searchBar.searchBarStyle = .minimal
 
@@ -100,6 +101,16 @@ extension SearchViewController: TabBarSelectable {
               tableView.numberOfRows(inSection: 0) > 0
         else { return }
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension SearchViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchResultsController = searchController.searchResultsController as? SearchResultsViewController else { return }
+        searchResultsController.updateSearchQuery(with: searchController.searchBar.text)
     }
 }
 
